@@ -14,13 +14,13 @@
 > rails s
 
 ## カタログ設計
-
+https://docs.google.com/spreadsheets/d/1-GiL_jAvd_4guHlFK6W3ngEu-La2dSPX/edit?usp=sharing&ouid=106903575897123476806&rtpof=true&sd=true
 
 ## テーブル定義書
-
+https://docs.google.com/spreadsheets/d/1E97QYyQ9YvBaIKaqJWxiXiv3d-bZLZ14/edit?usp=sharing&ouid=106903575897123476806&rtpof=true&sd=true
 
 ## ワイヤーフレーム
-
+https://cacoo.com/diagrams/QI24naOcO5OfZTw0/241D3
 
 ## ER図
 
