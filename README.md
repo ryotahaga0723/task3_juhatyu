@@ -5,7 +5,7 @@
 - Rails 6.0.4.7
 
 ## 実行手順
-> git clone https://github.com/ryotahaga0723/task2_kintai.git  
+> git clone https://github.com/ryotahaga0723/task3_juhatyu.git   
 > cd timer_app2   
 > bundle install  
 > yarn install --check-files  
