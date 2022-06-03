@@ -1,24 +1,29 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## 開発言語
+- Ruby 3.0.1p64
+- Rails 6.0.4.7
 
-Things you may want to cover:
+## 実行手順
+> git clone https://github.com/ryotahaga0723/task2_kintai.git  
+> cd timer_app2   
+> bundle install  
+> yarn install --check-files  
+> rails db:create && rails db:migrate  
+> rails db:seed  
+> rails s
 
-* Ruby version
+## カタログ設計
 
-* System dependencies
 
-* Configuration
+## テーブル定義書
 
-* Database creation
 
-* Database initialization
+## ワイヤーフレーム
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+## ER図
 
-* Deployment instructions
 
-* ...
+## 画面遷移図
+
