@@ -6,7 +6,7 @@
 
 ## 実行手順
 > git clone https://github.com/ryotahaga0723/task3_juhatyu.git   
-> cd timer_app2   
+> cd juhatyu_app   
 > bundle install  
 > yarn install --check-files  
 > rails db:create && rails db:migrate  
