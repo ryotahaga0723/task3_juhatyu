@@ -14,6 +14,7 @@ class CompaniesController < ApplicationController
   def new
     @company = Company.new
     @company.build_address
+    @company.build_telephone
   end
 
   # GET /companies/1/edit
@@ -66,6 +67,6 @@ class CompaniesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def company_params
-      params.require(:company).permit(:code, :name, :email, address_attributes: [:id, :postcode, :prefecture, :city, :town, :address, :building, :room_number])
+      params.require(:company).permit(:code, :name, :email, address_attributes: [:id, :postal_code, :prefecture_code, :prefecture, :city, :town, :address, :building, :room_number], telephone_attributes: [:id, :number])
     end
 end

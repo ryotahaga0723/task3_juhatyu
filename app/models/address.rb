@@ -7,4 +7,5 @@ class Address < ApplicationRecord
   validates :building, length: { maximum: 255 }
 
   belongs_to :addressable, polymorphic: true
+
 end

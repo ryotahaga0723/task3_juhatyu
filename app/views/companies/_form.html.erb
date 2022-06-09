@@ -30,8 +30,7 @@
 
       <div class="field">
         <%= form.label :都道府県名 %>
-        <%= form.text_field :prefecture %>
-      </div>
+        <%= form.collection_select :prefecture, JpPrefecture::Prefecture.all, :name, :name %>      </div>
 
       <div class="field">
         <%= form.label :市町村名 %>
@@ -60,7 +59,29 @@
     <% end %>
   </div>
 
+  <div id="telephone_forms">
+    <%= form.fields_for :telephone do |form| %>
+      <div class="field">
+        <%= form.label :電話番号 %>
+        <%= form.number_field :number %>
+      </div>
+    <% end %>
+  </div>
+
+
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => { 
+$("#company_address_attributes_postal_code").jpostal({
+  postcode : [ "#company_address_attributes_postal_code" ],
+  address  : {"#company_address_attributes_prefecture_code": "%3",
+              "#company_address_attributes_city": "%4",
+              "#company_address_attributes_town": "%5%6%7"
+                  }
+})
+})
+</script>
