@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>取引先一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>企業コード</th>
+      <th>社名</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @companies.each do |company| %>
+      <tr>
+        <td><%= company.code %></td>
+        <td><%= company.name %></td>
+        <td><%= link_to '確認', company %></td>
+        <td><%= link_to '編集', edit_company_path(company) %></td>
+        <td><%= link_to '削除', company, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to '新規作成', new_company_path %>

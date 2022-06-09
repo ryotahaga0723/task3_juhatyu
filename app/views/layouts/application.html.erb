@@ -10,6 +10,64 @@
   </head>
 
   <body>
-    <%= yield %>
-  </body>
+  <header>
+  <div class = "header">
+    <div class = "log">
+      <h3>With Job</h3>
+    </div>
+    <div class="global_nav">
+      <nav class="nav">
+        <ul class = "nav">
+          <% if logged_in? %>
+            <% if current_user.company.code == 100 %>
+              <div class = "nav_item">
+                <li><%= link_to "取引先一覧", companies_path(current_user.id) %></li>
+              </div>
+            <% else %>
+              <div class = "nav_item">
+                <li><%= link_to "会社詳細", company_path(current_user.company.code) %></li>
+              </div>
+            <% end %>
+            <div class = "nav_item">
+              <li><%= link_to "ログアウト", session_path(current_user.id), method: :delete %></li>
+            </div>
+          <% else %>
+            <div class = "nav_item">
+              <li><%= link_to "アカウント登録", new_user_path %></li>
+            </div>
+            <div class = "nav_item">
+              <li><%= link_to "ログイン", new_session_path %></li>
+            </div>
+          <% end %>
+        </ul>
+      </nav>
+      <nav class="nav_toggle">
+        <i></i>
+        <i></i>
+        <i></i>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<%= yield %>
+
+<footer>
+  <nav>
+  <ul class = "footer_item">
+    <% if logged_in? %>
+      <div class = "footer_nav_item">
+      </div>
+    <% end %>
+  </ul>
+  <p class ="footer_copy">©haga ryota</p>
+  </nav>
+</footer>
+</body>
 </html>
+
+<script>
+$('.nav_toggle').on('click', function () {
+$('.nav_toggle, .nav').toggleClass('show');
+});
+</script>

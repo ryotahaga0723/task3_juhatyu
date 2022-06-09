@@ -1,0 +1,42 @@
+<section class="section">
+  <div class="section_inner">
+    <div class= "title">
+      <h1>取引先詳細</h1>
+    </div>
+    <table class="osare3-table col4t show">
+      <tbody>
+      
+        <tr>
+          <td>企業コード</td>
+          <td><%= @company.code %></td>
+        </tr>
+
+        <tr>
+          <td>社名</td>
+          <td><%= @company.name %></td>
+        </tr>
+
+        <tr>
+          <td>郵便番号</td>
+          <td><%= @company.address.postcode %></td>
+        </tr>
+
+        <tr>
+          <td>住所</td>
+          <td>
+            <%= @company.address.prefecture %>
+            <%= @company.address.city %>
+            <%= @company.address.town %>
+            <%= @company.address.address %>
+            <%= @company.address.building %>
+            <%= @company.address.room_number %>
+          </td>
+        </tr>
+
+      <tbody>
+    </table>
+
+    <%= link_to '編集', edit_company_path(@company) %> |
+    <%= link_to '戻る', companies_path %>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+<section class="section">
+<div class="section_inner">
+  <div class= "log_in">
+    <div class= "title">
+      <h1>ログイン</h1>
+    </div>
+    <% flash.each do |key, value| %>
+      <%= content_tag(:div, value, class: "#{key}") %>
+    <% end %>   
+
+      <%= form_with(scope: :session, url: sessions_path, local: true) do |f| %>
+        <table>
+        <tbody>
+        <tr>
+          <td><%= f.label :メールアドレス %></td>
+          <td><%= f.email_field :email %></td>
+        </tr>
+        <tr>
+          <td><%= f.label :パスワード %></td>
+          <td><%= f.password_field :password %></td>
+        </tr>
+        </table>
+        </tboby>
+        <%= f.submit "ログイン" %>
+      <% end %>
+  </div>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+<section class="section">
+<div class="section_inner">
+  <div class= "title">
+    <h1>アカウント詳細</h1>
+  </div>
+
+  <% flash.each do |key, value| %>
+    <%= content_tag(:div, value, class: "#{key}") %>
+  <% end %>   
+  
+
+    <table class="osare3-table col4t show">
+      <tbody>
+        <tr>
+          <td>名前</td>
+          <td><%= @user.name %></td>
+        </tr>
+        <tr>
+          <td>メールアドレス</td>
+          <td><%= @user.email %></td>
+        </tr>
+      <tbody>
+    </table>
+
+    <div id = "edit-user">
+      <% if current_user.admin == true %>
+        <% if current_user == @user %>
+          <%= link_to "編集", edit_admin_user_path(id: @user.id) %>
+        <% else %>
+          <%= link_to "編集", edit_contract_path(id: @user.id) %>
+        <% end %>
+      <% else %>
+        <%= link_to "編集", edit_user_path(id: @user.id) %>
+      <% end %>
+    </div>
+
+    <%= link_to "スケジュール一覧", schedules_path(user: @user) %>
+  </div>
+</section>

@@ -1,0 +1,48 @@
+<section class="section">
+<div class ="section_inner">
+  <div class= "sign_in">
+    <div class= "title">
+      <h1>アカウント登録</h1>
+    </div>
+    <% if @user.errors.any? %>
+      <div id="error_explanation">
+        <h2>エラーが発生しました。</h2>
+        <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+      <%= form_with(model: @user, local: true) do |f| %>
+        <table>
+          <tbody>
+            <tr>
+              <td><%= f.label :企業コード %></td>
+              <td><%= f.number_field :company_id %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :名前 %></td>
+              <td><%= f.text_field :name %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :メールアドレス %></td>
+              <td><%= f.email_field :email %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :パスワード %></td>
+              <td><%= f.password_field :password %></td>
+            </tr>
+            <tr>
+              <td><%= f.label :パスワード（確認） %></td>
+              <td><%= f.password_field :password_confirmation %></td>
+            </tr>
+          </tbody>
+        </table>
+                
+        <%= f.submit "新規登録" %>
+      <% end %>
+  </div>
+  </div>
+</section>
