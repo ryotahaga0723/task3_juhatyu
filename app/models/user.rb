@@ -7,4 +7,5 @@ class User < ApplicationRecord
 
   belongs_to :company, primary_key: :code
   has_many :stocks, dependent: :destroy
+  has_many :orders, dependent: :destroy
 end

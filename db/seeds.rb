@@ -52,3 +52,14 @@ Product.create!(
     user_id: 1,
   }
 )
+Supply.create!(
+  code: '100119',
+  name: "リンゴ",
+  price: 100,
+  set: 1,
+  content: "青森県産のトキ",
+  product_id: 1,
+  stock_id: 1,
+  created_at: "2019-07-11 02:33:34", 
+  updated_at: "2019-07-11 02:33:34"
+)

@@ -23,9 +23,19 @@ class ProductsController < ApplicationController
   # POST /products or /products.json
   def create
     @product = Product.new(product_params)
-
     respond_to do |format|
       if @product.save
+          code = Supply.all.count + 1
+        @supply = Supply.create!(
+          code: @product.company.code.to_s + @product.category.id.to_s + code.to_s + "9",
+          name: @product.name,
+          price: 100,
+          set: 1,
+          content: @product.content,
+          product_id: @product.id,
+          stock_id: @product.stock.id
+        )
+    
         format.html { redirect_to products_url, notice: "在庫を登録しました" }
         format.json { render :show, status: :created, location: @product }
       else
@@ -68,4 +78,9 @@ class ProductsController < ApplicationController
     def product_params
       params.require(:product).permit(:name, :content, :company_id, :category_id, stock_attributes: [:id, :quantity, :company_id, :user_id])
     end
+
+    def supply_params
+      params.require(:supply).permit(:code, :name, :price, :set, :content, :product_id, :stock_id)
+    end
+
 end
