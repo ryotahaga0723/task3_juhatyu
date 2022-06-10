@@ -19,6 +19,9 @@
       <nav class="nav">
         <ul class = "nav">
           <% if logged_in? %>
+            <div class = "nav_item">
+              <li><%= link_to "在庫一覧", products_path(current_user.company.code) %></li>
+            </div>
             <% if current_user.company.code == 100 %>
               <div class = "nav_item">
                 <li><%= link_to "取引先一覧", companies_path(current_user.id) %></li>

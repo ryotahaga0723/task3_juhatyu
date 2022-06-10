@@ -6,4 +6,5 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6, maximum: 255 }
 
   belongs_to :company, primary_key: :code
+  has_many :stocks, dependent: :destroy
 end

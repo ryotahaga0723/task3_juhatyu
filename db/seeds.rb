@@ -34,4 +34,21 @@ Address.create!(
   created_at: "2019-07-11 02:33:34", 
   updated_at: "2019-07-11 02:33:34"
 )
-
+Category.create!(
+  name: 'フルーツ',
+  company_id: 100,
+  created_at: "2019-07-11 02:33:34", 
+  updated_at: "2019-07-11 02:33:34"
+)
+Product.create!(
+  name: 'リンゴ', 
+  company_id: 100,
+  category_id: 1,
+  created_at: "2019-07-11 02:33:34", 
+  updated_at: "2019-07-11 02:33:34",
+  stock_attributes: {
+    quantity: 100,
+    company_id: 100,
+    user_id: 1,
+  }
+)

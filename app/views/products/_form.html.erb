@@ -1,0 +1,49 @@
+<%= form_with(model: product, local: true) do |form| %>
+  <% if product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+        <% product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+  <%= form.label :カテゴリー %>
+  <%= form.select :category_id, current_user.company.categories.collect { |c| [c.name, c.id]}, { include_blank: '選択してください'}, { class: 'form-control' , required: true} %>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :商品名 %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :説明 %>
+    <%= form.text_area :content %>
+  </div>
+
+  <div id="stock_forms">
+    <%= form.fields_for :stock do |form| %>
+      <div class="field">
+        <%= form.label :在庫数 %>
+        <%= form.number_field :quantity %>
+      </div>
+      <%= form.hidden_field :company_id, value: current_user.company.code %>
+      <%= form.hidden_field :user_id, value: current_user.id %>
+      <% end %>
+  </div>
+
+
+  <div class="field">
+    <%= form.hidden_field :company_id, value: current_user.company.code %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
