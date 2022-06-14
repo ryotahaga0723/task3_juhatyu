@@ -13,6 +13,10 @@ class OrdersController < ApplicationController
   # GET /orders/new
   def new
     @order = Order.new
+    @order.build_address
+    @order.build_telephone
+    @order.build_shipping
+    Supply.count.times{@order.order_supplies.build.build_status}
   end
 
   # GET /orders/1/edit
@@ -22,23 +26,39 @@ class OrdersController < ApplicationController
   # POST /orders or /orders.json
   def create
     @order = Order.new(order_params)
-
-    respond_to do |format|
-      if @order.save
-        format.html { redirect_to order_url(@order), notice: "Order was successfully created." }
-        format.json { render :show, status: :created, location: @order }
+    @total_price = 0
+    @order.order_supplies.each do |f|
+      if f.availability == true
+        unless f.quantity.nil?
+          totalsub = f.supply.price * f.quantity
+          @total_price += totalsub  
+        end
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @order.errors, status: :unprocessable_entity }
+        f.destroy
       end
+    end
+
+    if @order.save
+      @order.update(total_price: @total_price)
+      redirect_to order_url(@order), notice: "注文内容を作成しました"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /orders/1 or /orders/1.json
   def update
+    @total_price = 0
+    @order.order_supplies.each do |f|
+      totalsub = f.supply.price * f.quantity
+      @total_price += totalsub
+    end
+    @order.update(total_price: @total_price)
+
+
     respond_to do |format|
       if @order.update(order_params)
-        format.html { redirect_to order_url(@order), notice: "Order was successfully updated." }
+        format.html { redirect_to order_url(@order), notice: "注文内容を更新しました" }
         format.json { render :show, status: :ok, location: @order }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -50,9 +70,8 @@ class OrdersController < ApplicationController
   # DELETE /orders/1 or /orders/1.json
   def destroy
     @order.destroy
-
     respond_to do |format|
-      format.html { redirect_to orders_url, notice: "Order was successfully destroyed." }
+      format.html { redirect_to orders_url, notice: "注文内容を削除しました" }
       format.json { head :no_content }
     end
   end
@@ -65,6 +84,13 @@ class OrdersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def order_params
-      params.require(:order).permit(:code, :date, :total_price, :user_id)
+      params.require(:order).permit(:code, :date, :total_price, :user_id, 
+        order_supplies_attributes: [:id, :availability, :quantity, :supply_id,
+          status_attributes: [:id, :status]
+        ], 
+        address_attributes: [:id, :postcode, :prefecture_code, :prefecture, :city, :town, :address, :building, :room_number], 
+        telephone_attributes: [:id, :number], 
+        shipping_attributes: [:id, :name]
+      )
     end
 end

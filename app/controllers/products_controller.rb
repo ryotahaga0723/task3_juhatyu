@@ -78,9 +78,4 @@ class ProductsController < ApplicationController
     def product_params
       params.require(:product).permit(:name, :content, :company_id, :category_id, stock_attributes: [:id, :quantity, :company_id, :user_id])
     end
-
-    def supply_params
-      params.require(:supply).permit(:code, :name, :price, :set, :content, :product_id, :stock_id)
-    end
-
 end

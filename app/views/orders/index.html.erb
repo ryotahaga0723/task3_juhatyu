@@ -6,10 +6,10 @@
   <thead>
     <tr>
       <th>発注日</th>
-      <th>商品名</th>
-      <th>セット数</th>
-      <th>個数</th>
-      <th>金額</th>
+      <th>商品数</th>
+      <th>合計金額</th>
+      <th>希望到着日</th>
+      <th>詳細</th>
       <th>編集</th>
       <th>削除</th>
       <th colspan="3"></th>
@@ -19,13 +19,13 @@
   <tbody>
     <% @orders.each do |order| %>
       <tr>
-        <td><%= order.date %></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td><%= link_to 'Show', order %></td>
-        <td><%= link_to 'Edit', edit_order_path(order) %></td>
-        <td><%= link_to 'Destroy', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= order.created_at.strftime("%Y年%m月%d日") %></td>
+        <td><%= order.order_supplies.count %>点</td>
+        <td><%= order.total_price %>円</td>
+        <td><%= order.date.strftime("%Y年%m月%d日") %></td>
+        <td><%= link_to '詳細', order %></td>
+        <td><%= link_to '編集', edit_order_path(order) %></td>
+        <td><%= link_to '削除', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

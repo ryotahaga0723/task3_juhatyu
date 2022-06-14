@@ -34,6 +34,13 @@ Address.create!(
   created_at: "2019-07-11 02:33:34", 
   updated_at: "2019-07-11 02:33:34"
 )
+Telephone.create!(
+  number: '09011111111',
+  telephoneable_type: 'Company',
+  telephoneable_id: 100,
+  created_at: "2019-07-11 02:33:34", 
+  updated_at: "2019-07-11 02:33:34"
+)
 Category.create!(
   name: 'フルーツ',
   company_id: 100,
@@ -62,4 +69,53 @@ Supply.create!(
   stock_id: 1,
   created_at: "2019-07-11 02:33:34", 
   updated_at: "2019-07-11 02:33:34"
+)
+Product.create!(
+  name: 'ブドウ', 
+  company_id: 100,
+  category_id: 1,
+  created_at: "2019-07-11 02:33:34", 
+  updated_at: "2019-07-11 02:33:34",
+  stock_attributes: {
+    quantity: 150,
+    company_id: 100,
+    user_id: 1,
+  }
+)
+Supply.create!(
+  code: '100129',
+  name: "ブドウ",
+  price: 150,
+  set: 1,
+  content: "山梨県産の巨砲",
+  product_id: 2,
+  stock_id: 2,
+  created_at: "2019-07-11 02:33:34", 
+  updated_at: "2019-07-11 02:33:34"
+)
+
+Order.create!(
+  code: '1000001',
+  date: "2022-06-13",
+  total_price: 100,
+  user_id: 1,
+  created_at: "2019-07-11 02:33:34", 
+  updated_at: "2019-07-11 02:33:34",
+)
+Order.create!(
+  code: '1000002',
+  date: "2022-06-14",
+  total_price: 2000,
+  user_id: 1,
+  created_at: "2019-07-11 02:33:34", 
+  updated_at: "2019-07-11 02:33:34",
+  order_supplies_attributes: [{
+    availability: true,
+    quantity: 20,
+    supply_id: 100119,
+    statuses_attributes: [{
+      status: 0,
+      order_supply_id: 1,
+    }]
+  }]
 )

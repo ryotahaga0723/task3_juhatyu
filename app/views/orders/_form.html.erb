@@ -11,20 +11,108 @@
     </div>
   <% end %>
 
+      <table>
+        <thead>
+          <tr>
+            <th>商品名</th>
+            <th>個数</th>
+            <th>チェック</th>
+            <th>ステータス</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <%= form.fields_for :order_supplies do |form| %>
+              <tr>
+              <td><%= form.collection_select :supply_id, form.object.selectable_supplies, :id, :name %></td>
+              <td><%= form.number_field :quantity %></td>
+              <td><%= form.check_box :availability, :as => :boolean %></td>
+    
+              <%= form.fields_for :status do |form| %>
+                <td><%= form.hidden_field :status %></td>
+              <% end %>
+              </tr>
+            <% end %>
+        </tbody>
+      </table>
+
+<% Order.order(created_at: :desc).limit(1).each do |f| %>
+  <% if f.code.present? %>
+    <% @order_code = f.code.to_i + 1 %>
+  <% else %>
+    <% @order_code = "1000001" %>
+  <% end %>
+<% end %>
+
+
   <div class="field">
-    <%= form.label :注文コード %>
-    <%= form.text_field :code %>
+    <%= form.number_field :code, value: @order_code %>
   </div>
 
   <div class="field">
-    <%= form.label :日付 %>
+    <%= form.label :到着希望日 %>
     <%= form.date_select :date %>
   </div>
 
-  <div class="field">
-    <%= form.label :total_price %>
-    <%= form.text_field :total_price %>
-  </div>
+  <div id="name_forms">
+  <%= form.fields_for :shipping do |form| %>
+    <div class="field">
+      <%= form.label :名前 %>
+      <%= form.text_field :name, value: current_user.name %>
+    </div>
+  <% end %>
+</div>
+
+
+  <div id="address_forms">
+  <%= form.fields_for :address do |form| %>
+    <div class="field">
+      <%= form.label :郵便番号 %>
+      <%= form.number_field :postcode, value: current_user.company.address.postcode %>
+    </div>
+
+    <div class="field">
+      <%= form.label :都道府県名 %>
+      <%= form.collection_select :prefecture, JpPrefecture::Prefecture.all, :name, :name, value: current_user.company.address.prefecture %>      
+    </div>
+
+    <div class="field">
+      <%= form.label :市町村名 %>
+      <%= form.text_field :city, value: current_user.company.address.city %>
+    </div>
+
+    <div class="field">
+      <%= form.label :地区名 %>
+      <%= form.text_field :town, value: current_user.company.address.town %>
+    </div>
+
+    <div class="field">
+      <%= form.label :以降住所 %>
+      <%= form.text_field :address, value: current_user.company.address.address %>
+    </div>
+
+    <div class="field">
+      <%= form.label :建物名 %>
+      <%= form.text_field :building, value: current_user.company.address.building %>
+    </div>
+
+    <div class="field">
+      <%= form.label :部屋番号 %>
+      <%= form.text_field :room_number, value: current_user.company.address.room_number %>
+    </div>
+  <% end %>
+</div>
+
+<div id="telephone_forms">
+  <%= form.fields_for :telephone do |form| %>
+    <div class="field">
+      <%= form.label :電話番号 %>
+      <%= form.number_field :number %>
+    </div>
+  <% end %>
+</div>
+
 
   <div class="field">
     <%= form.hidden_field :user_id, value: current_user.id %>

@@ -1,24 +1,76 @@
-<p id="notice"><%= notice %></p>
+<section class="section">
+<div class="section_inner">
+  <div class= "title">
+    <h1>注文詳細</h1>
+  </div>
 
-<p>
-  <strong>Code:</strong>
-  <%= @order.code %>
-</p>
+  <% flash.each do |key, value| %>
+    <%= content_tag(:div, value, class: "#{key}") %>
+  <% end %>   
+  
 
-<p>
-  <strong>Date:</strong>
-  <%= @order.date %>
-</p>
+    <table class="osare3-table col4t show">
+      <tbody>
 
-<p>
-  <strong>Total price:</strong>
-  <%= @order.total_price %>
-</p>
+        <tr>
+          <td>注文コード</td>
+          <td><%= @order.code %></td>
+        </tr>
 
-<p>
-  <strong>User:</strong>
-  <%= @order.user_id %>
-</p>
+        <tr>
+          <td>到着希望日</td>
+          <td><%= @order.date.strftime("%Y年%m月%d日") %></td>
+        </tr>
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>
+        <tr>
+          <td>名前</td>
+          <td><%= @order.shipping.name %></td>
+        </tr>
+        
+        <tr>
+        <td>住所</td>
+        <td>
+          <%= @order.address.prefecture %>
+          <%= @order.address.city %>
+          <%= @order.address.town %>
+          <%= @order.address.address %>
+          <%= @order.address.building %>
+          <%= @order.address.room_number %>
+        </td>
+      </tr>
+
+        <tr>
+          <td>合計金額</td>
+          <td><%= @order.total_price %>円</td>
+        </tr>
+
+      <tbody>
+    </table>
+    
+    <table>
+      <thead>
+        <tr>
+          <td>商品コード</td>
+          <td>商品名</td>
+          <td>単価</td>
+          <td>セット数</td>
+          <td>個数</td>
+        </tr>
+      </thead>
+      <tboby>
+        <% @order.order_supplies.all.each do |f| %>
+          <tr>
+            <td><%= f.supply.code %></td>
+            <td><%= f.supply.name %></td>
+            <td><%= f.supply.price %></td>
+            <td><%= f.supply.set %></td>
+            <td><%= f.quantity %></td>
+          </tr>
+        <% end %>
+      <tbody>
+    </table>
+
+    <%= link_to '編集', edit_order_path(@order) %> |
+    <%= link_to '戻る', orders_path %>
+  </div>
+</section>
