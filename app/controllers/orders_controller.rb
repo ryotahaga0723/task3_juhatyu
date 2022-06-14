@@ -16,7 +16,8 @@ class OrdersController < ApplicationController
     @order.build_address
     @order.build_telephone
     @order.build_shipping
-    Supply.count.times{@order.order_supplies.build.build_status}
+    @order.build_status
+    Supply.count.times{@order.order_supplies.build}
   end
 
   # GET /orders/1/edit
@@ -85,9 +86,8 @@ class OrdersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def order_params
       params.require(:order).permit(:code, :date, :total_price, :user_id, 
-        order_supplies_attributes: [:id, :availability, :quantity, :supply_id,
-          status_attributes: [:id, :status]
-        ], 
+        order_supplies_attributes: [:id, :availability, :quantity, :supply_id], 
+        status_attributes: [:id, :status],
         address_attributes: [:id, :postcode, :prefecture_code, :prefecture, :city, :town, :address, :building, :room_number], 
         telephone_attributes: [:id, :number], 
         shipping_attributes: [:id, :name]

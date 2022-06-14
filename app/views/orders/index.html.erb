@@ -12,6 +12,7 @@
       <th>詳細</th>
       <th>編集</th>
       <th>削除</th>
+      <th>ステータス</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -26,10 +27,23 @@
         <td><%= link_to '詳細', order %></td>
         <td><%= link_to '編集', edit_order_path(order) %></td>
         <td><%= link_to '削除', order, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <% if order.status.present? %>
+          <% if order.status.status == "受注確認待ち" %>
+            <%=link_to order.status.status,  update_1_status_path(order.status), method: :post %>
+          <% elsif order.status.status == "発送待ち" %>
+            <%=link_to 'スケジュール一覧',  schedules_path(order) %>
+            <%=link_to order.status.status,  new_delivery_path(order) %>
+          <% else %>
+            hello
+          <% end %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
 
 <br>
 

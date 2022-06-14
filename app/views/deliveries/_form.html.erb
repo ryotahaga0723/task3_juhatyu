@@ -1,0 +1,36 @@
+<%= form_with(model: delivery, local: true) do |form| %>
+  <% if delivery.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(delivery.errors.count, "error") %> prohibited this company from being saved:</h2>
+
+      <ul>
+        <% delivery.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :到着予定日 %>
+    <%= form.date_field :arrive_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :配達業者 %>
+    <%= form.text_field :delivery_company %>
+  </div>
+
+  <div class="field">
+    <%= form.label :配達番号 %>
+    <%= form.number_field :delivery_number %>
+  </div>
+
+  <% order = Order.find(params[:format]) %>
+  <%= form.hidden_field :order_id, value: order.id %>
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

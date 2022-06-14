@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_14_015901) do
+ActiveRecord::Schema.define(version: 2022_06_14_072803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,16 @@ ActiveRecord::Schema.define(version: 2022_06_14_015901) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "deliveries", force: :cascade do |t|
+    t.datetime "arrive_date", null: false
+    t.string "delivery_company", null: false
+    t.bigint "delivery_number", null: false
+    t.bigint "order_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_deliveries_on_order_id"
+  end
+
   create_table "order_supplies", force: :cascade do |t|
     t.boolean "availability", default: false, null: false
     t.bigint "quantity", null: false
@@ -75,6 +85,17 @@ ActiveRecord::Schema.define(version: 2022_06_14_015901) do
     t.index ["company_id"], name: "index_products_on_company_id"
   end
 
+  create_table "schedules", force: :cascade do |t|
+    t.date "date", null: false
+    t.string "what", null: false
+    t.string "do", null: false
+    t.bigint "check_list", default: 0, null: false
+    t.bigint "order_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_schedules_on_order_id"
+  end
+
   create_table "shippings", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "order_id", null: false
@@ -85,10 +106,10 @@ ActiveRecord::Schema.define(version: 2022_06_14_015901) do
 
   create_table "statuses", force: :cascade do |t|
     t.bigint "status", default: 0, null: false
-    t.bigint "order_supply_id", null: false
+    t.bigint "order_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["order_supply_id"], name: "index_statuses_on_order_supply_id"
+    t.index ["order_id"], name: "index_statuses_on_order_id"
   end
 
   create_table "stocks", force: :cascade do |t|

@@ -23,17 +23,13 @@
         </thead>
 
         <tbody>
-            <%= form.fields_for :order_supplies do |form| %>
-              <tr>
+          <%= form.fields_for :order_supplies do |form| %>
+            <tr>
               <td><%= form.collection_select :supply_id, form.object.selectable_supplies, :id, :name %></td>
               <td><%= form.number_field :quantity %></td>
               <td><%= form.check_box :availability, :as => :boolean %></td>
-    
-              <%= form.fields_for :status do |form| %>
-                <td><%= form.hidden_field :status %></td>
-              <% end %>
-              </tr>
-            <% end %>
+            </tr>
+          <% end %>
         </tbody>
       </table>
 
@@ -49,6 +45,10 @@
   <div class="field">
     <%= form.number_field :code, value: @order_code %>
   </div>
+
+  <%= form.fields_for :status do |form| %>
+    <%= form.hidden_field :status %>
+  <% end %>
 
   <div class="field">
     <%= form.label :到着希望日 %>

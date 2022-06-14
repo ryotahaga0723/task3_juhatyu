@@ -55,3 +55,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'rails-i18n'
 gem 'jp_prefecture'
 gem 'jquery-rails'
+gem 'cocoon'

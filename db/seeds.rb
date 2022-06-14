@@ -101,21 +101,24 @@ Order.create!(
   user_id: 1,
   created_at: "2019-07-11 02:33:34", 
   updated_at: "2019-07-11 02:33:34",
+  order_supplies_attributes: [{
+    availability: true,
+    quantity: 20,
+    supply_id: 100119
+  }],
+  status_attributes: {
+    status: 0
+  }
 )
 Order.create!(
   code: '1000002',
   date: "2022-06-14",
   total_price: 2000,
   user_id: 1,
-  created_at: "2019-07-11 02:33:34", 
+  created_at: "2019-07-11 02:33:35", 
   updated_at: "2019-07-11 02:33:34",
-  order_supplies_attributes: [{
-    availability: true,
-    quantity: 20,
-    supply_id: 100119,
-    statuses_attributes: [{
-      status: 0,
-      order_supply_id: 1,
-    }]
-  }]
+
+  status_attributes: {
+    status: 0
+  }
 )
