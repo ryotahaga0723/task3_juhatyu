@@ -8,9 +8,12 @@
 Company.create!(
   code: 100,
   name: '株式会社A',
-  created_at: "2019-07-11 02:33:34", 
-  updated_at: "2019-07-11 02:33:34"
 )
+Company.create!(
+  code: 200,
+  name: '株式会社B',
+)
+
 User.create!(
   name: '管理者A',
   email: 'aaa@gmail.com',
@@ -18,9 +21,24 @@ User.create!(
   password_confirmation: 'aaaaaa',
   admin: true, 
   company_id: 100,
-  created_at: "2019-07-11 02:33:34", 
-  updated_at: "2019-07-11 02:33:34"
 )
+User.create!(
+  name: '社員B',
+  email: "bbb@gmail.com",
+  password: "bbbbbb",
+  password_confirmation: "bbbbbb",
+  admin: false, 
+  company_id: 200,
+)
+User.create!(
+  name: '社員C',
+  email: "ccc@gmail.com",
+  password: "cccccc",
+  password_confirmation: "cccccc",
+  admin: false, 
+  company_id: 200,
+)
+
 Address.create!(
   postcode: 1000001,
   prefecture: '東京都',
@@ -31,28 +49,35 @@ Address.create!(
   room_number: '5階',
   addressable_type: 'Company',
   addressable_id: 100,
-  created_at: "2019-07-11 02:33:34", 
-  updated_at: "2019-07-11 02:33:34"
 )
 Telephone.create!(
   number: '09011111111',
   telephoneable_type: 'Company',
-  telephoneable_id: 100,
-  created_at: "2019-07-11 02:33:34", 
-  updated_at: "2019-07-11 02:33:34"
+  telephoneable_id: 200,
 )
+Address.create!(
+  postcode: 1000001,
+  prefecture: '大阪府',
+  city: '大阪市',
+  town: '新世界',
+  address: '1-1-1', 
+  addressable_type: 'Company',
+  addressable_id: 200,
+)
+Telephone.create!(
+  number: '09011111112',
+  telephoneable_type: 'Company',
+  telephoneable_id: 200,
+)
+
 Category.create!(
   name: 'フルーツ',
   company_id: 100,
-  created_at: "2019-07-11 02:33:34", 
-  updated_at: "2019-07-11 02:33:34"
 )
 Product.create!(
   name: 'リンゴ', 
   company_id: 100,
   category_id: 1,
-  created_at: "2019-07-11 02:33:34", 
-  updated_at: "2019-07-11 02:33:34",
   stock_attributes: {
     quantity: 100,
     company_id: 100,
@@ -67,15 +92,11 @@ Supply.create!(
   content: "青森県産のトキ",
   product_id: 1,
   stock_id: 1,
-  created_at: "2019-07-11 02:33:34", 
-  updated_at: "2019-07-11 02:33:34"
 )
 Product.create!(
   name: 'ブドウ', 
   company_id: 100,
   category_id: 1,
-  created_at: "2019-07-11 02:33:34", 
-  updated_at: "2019-07-11 02:33:34",
   stock_attributes: {
     quantity: 150,
     company_id: 100,
@@ -90,35 +111,79 @@ Supply.create!(
   content: "山梨県産の巨砲",
   product_id: 2,
   stock_id: 2,
-  created_at: "2019-07-11 02:33:34", 
-  updated_at: "2019-07-11 02:33:34"
 )
 
 Order.create!(
   code: '1000001',
   date: "2022-06-13",
   total_price: 100,
-  user_id: 1,
-  created_at: "2019-07-11 02:33:34", 
-  updated_at: "2019-07-11 02:33:34",
+  user_id: 2,
   order_supplies_attributes: [{
     availability: true,
     quantity: 20,
-    supply_id: 100119
+    supply_id: 1
   }],
   status_attributes: {
     status: 0
+  },
+  shipping_attributes: {
+    name: '管理者A',
   }
 )
 Order.create!(
   code: '1000002',
   date: "2022-06-14",
   total_price: 2000,
-  user_id: 1,
-  created_at: "2019-07-11 02:33:35", 
-  updated_at: "2019-07-11 02:33:34",
-
+  user_id: 2,
+  order_supplies_attributes: [
+    {
+      availability: true,
+      quantity: 20,
+      supply_id: 2
+    },{
+      availability: true,
+      quantity: 30,
+      supply_id: 1
+    }],
   status_attributes: {
     status: 0
+  },
+  shipping_attributes: {
+    name: '社員B',
   }
+)
+Address.create!(
+  postcode: 1000001,
+  prefecture: '東京都',
+  city: '千代田区',
+  town: '一ツ橋',
+  address: '1-1-1', 
+  building: 'サンパレスサイドビル',
+  room_number: '5階',
+  addressable_type: 'Order',
+  addressable_id: 1,
+)
+Address.create!(
+  postcode: 1000001,
+  prefecture: '東京都',
+  city: '千代田区',
+  town: '一ツ橋',
+  address: '1-1-1', 
+  building: 'サンパレスサイドビル',
+  room_number: '5階',
+  addressable_type: 'Order',
+  addressable_id: 2,
+)
+
+Approval.create!(
+  approval: 0,
+  user_id: 2,
+  approvalable_type: 'Order',
+  approvalable_id: 1,
+)
+Approval.create!(
+  approval: 0,
+  user_id: 2,
+  approvalable_type: 'Order',
+  approvalable_id: 2,
 )

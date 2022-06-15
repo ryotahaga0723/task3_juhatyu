@@ -11,27 +11,24 @@
     </div>
   <% end %>
 
-      <table>
-        <thead>
-          <tr>
-            <th>商品名</th>
-            <th>個数</th>
-            <th>チェック</th>
-            <th>ステータス</th>
-            <th colspan="3"></th>
-          </tr>
-        </thead>
+  <table>
+    <thead>
+      <tr>
+        <th>商品名</th>
+        <th>個数</th>
+        <th>チェック</th>
+        <th>ステータス</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+  </table>
 
-        <tbody>
-          <%= form.fields_for :order_supplies do |form| %>
-            <tr>
-              <td><%= form.collection_select :supply_id, form.object.selectable_supplies, :id, :name %></td>
-              <td><%= form.number_field :quantity %></td>
-              <td><%= form.check_box :availability, :as => :boolean %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+  <div id="supply_forms">
+    <%= form.fields_for :order_supplies do |supply| %>
+      <%= render 'supply', {supply: supply} %>
+    <% end %>
+  </div>
+  <%= link_to_add_association '+商品入力フォームの追加', form, :order_supplies, partial: "supply", data: {association_insertion_node: '#supply_forms', association_insertion_method: 'after'}, form_name: 'supply' %>
 
 <% Order.order(created_at: :desc).limit(1).each do |f| %>
   <% if f.code.present? %>
@@ -43,7 +40,7 @@
 
 
   <div class="field">
-    <%= form.number_field :code, value: @order_code %>
+    <%= form.hidden_field :code, value: @order_code %>
   </div>
 
   <%= form.fields_for :status do |form| %>

@@ -9,7 +9,11 @@ class SessionsController < ApplicationController
       if user&.authenticate(params[:session][:password])
         log_in(user)
         flash[:notice] = 'ログインしました'
-        redirect_to companies_path(user.id)
+        if user.company.code == 100
+          redirect_to index_receive_orders_path(user.id)
+        else
+          redirect_to orders_path(user.id)
+        end
       else
         flash.now[:danger] = 'メールアドレスまたはパスワードに誤りがあります'
         render :new

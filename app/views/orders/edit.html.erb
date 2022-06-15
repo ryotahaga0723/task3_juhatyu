@@ -1,6 +1,9 @@
-<h1>Editing Order</h1>
+<h1>注文内容修正</h1>
 
 <%= render 'form', order: @order %>
 
-<%= link_to 'Show', @order %> |
-<%= link_to 'Back', orders_path %>
+<% if current_user.company.code == 100 %>
+<%= link_to '戻る', index_receive_orders_path %>
+<% else %>
+<%= link_to '戻る', orders_path %>
+<% end %>

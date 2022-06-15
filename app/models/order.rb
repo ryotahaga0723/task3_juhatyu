@@ -1,6 +1,5 @@
 class Order < ApplicationRecord
   validates :date, presence: true
-  self.primary_key = :code
 
   belongs_to :user
   has_many :order_supplies, dependent: :destroy
@@ -11,6 +10,9 @@ class Order < ApplicationRecord
   has_one :status, dependent: :destroy
   has_one :delivery, dependent: :destroy
   has_many :schedules, dependent: :destroy
+  has_one :invoice, dependent: :destroy
+  has_one :approval, as: :approvalable
+
 
   accepts_nested_attributes_for :order_supplies
   accepts_nested_attributes_for :address

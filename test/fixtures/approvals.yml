@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  approval: 
+  user_id: 
+  approvalable: one
+  approvalable_type: Approvalable
+
+two:
+  approval: 
+  user_id: 
+  approvalable: two
+  approvalable_type: Approvalable

@@ -1,0 +1,36 @@
+<section class="section">
+  <div class="section_inner">
+    <div class= "title">
+      <h1>配達状況詳細</h1>
+    </div>
+
+  <% flash.each do |key, value| %>
+    <%= content_tag(:div, value, class: "#{key}") %>
+  <% end %>   
+  
+
+    <table class="osare3-table col4t show">
+      <tbody>
+
+        <tr>
+          <td>到着予定日</td>
+          <td><%= @delivery.arrive_date.strftime("%Y年%m月%d日") %></td>
+        </tr>
+
+        <tr>
+          <td>配達業者</td>
+          <td><%= @delivery.delivery_company %></td>
+        </tr>
+
+        <tr>
+          <td>配達番号</td>
+          <td><%= @delivery.delivery_number %></td>
+        </tr>
+        
+      <tbody>
+    </table>
+    
+    <%= link_to '編集', edit_delivery_path(@delivery) %> |
+    <%= link_to '戻る', index_receive_orders_path %>
+  </div>
+</section>

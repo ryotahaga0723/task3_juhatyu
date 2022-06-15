@@ -2,9 +2,28 @@ class OrdersController < ApplicationController
   before_action :set_order, only: %i[ show edit update destroy ]
 
   # GET /orders or /orders.json
+  #発注業者側
+  ##月ごとの発注一覧
   def index
-    @orders = Order.all
+    @month = params[:month] ? Date.parse(params[:month]) : Time.zone.today
+    @orders = Order.left_outer_joins(:approval, :user).where(created_at: @month.all_month).where(approvals: {approval: 0}).where.not(user_id: current_user.id).where(users: {company_id: current_user.company.id})
+    @orders_approval = Order.left_outer_joins(:approval, :user).where(created_at: @month.all_month).where(approvals: {approval: 1}).where(users: {company_id: current_user.company.id})
+    @orders_receive = Order.left_outer_joins(:status, :user).where(created_at: @month.all_month).where.not(statuses: {status: "新規受付"}).where.not(statuses: {status: "受注不可"}).where(users: {company_id: current_user.company.id})
+    @supplies = Supply.left_outer_joins(order_supplies: [order: :user]).where(users: {company_id: current_user.company.id}).group(:name).order('count(name) desc')
   end
+
+  def index_supply
+    @supply = Supply.find(params[:format])
+    @order_supplies = OrderSupply.left_outer_joins(:supply).where(supplies: {name: @supply.name})
+  end
+
+
+  #受注業者側
+  def index_receive
+    @day = params[:day] ? Date.parse(params[:day]) : Time.zone.today
+    @orders = Order.left_outer_joins(:approval).where(created_at: @day.all_day).where(approvals: {approval: 1})
+  end
+
 
   # GET /orders/1 or /orders/1.json
   def show
@@ -41,6 +60,14 @@ class OrdersController < ApplicationController
 
     if @order.save
       @order.update(total_price: @total_price)
+
+      Approval.create!(
+        approval: 0,
+        user_id: current_user.id,
+        approvalable_type: "Order",
+        approvalable_id: @order.id,
+      )
+
       redirect_to order_url(@order), notice: "注文内容を作成しました"
     else
       render :new, status: :unprocessable_entity

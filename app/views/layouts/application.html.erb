@@ -20,15 +20,24 @@
         <ul class = "nav">
           <% if logged_in? %>
             <div class = "nav_item">
+              <li><%= link_to "請求書一覧", invoices_path(current_user.company.code) %></li>
+            </div>
+            <% if current_user.company.code == 100 %>
+            <div class = "nav_item">
               <li><%= link_to "販売商品一覧", supplies_path(current_user.company.code) %></li>
             </div>
-            <div class = "nav_item">
-              <li><%= link_to "発注一覧", orders_path(current_user.company.code) %></li>
-            </div>
+              <div class = "nav_item">
+                <li><%= link_to "受注一覧", index_receive_orders_path(current_user.company.code) %></li>
+              </div>
+            <% else %>
+              <div class = "nav_item">
+                <li><%= link_to "発注一覧", orders_path(current_user.company.code) %></li>
+              </div>
+            <% end %>
+            <% if current_user.company.code == 100 %>
             <div class = "nav_item">
               <li><%= link_to "在庫一覧", products_path(current_user.company.code) %></li>
             </div>
-            <% if current_user.company.code == 100 %>
               <div class = "nav_item">
                 <li><%= link_to "取引先一覧", companies_path(current_user.id) %></li>
               </div>

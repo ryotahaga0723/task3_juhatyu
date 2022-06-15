@@ -1,0 +1,9 @@
+<div class="nested-fields">
+    <%= supply.collection_select :supply_id, supply.object.selectable_supplies, :id, :name %>
+    <%= supply.number_field :quantity %></td>
+    <%= supply.check_box :availability, :as => :boolean %>
+
+  <div class="field">
+    <%= link_to_remove_association "-商品入力フォーム削除", supply %>
+  </div>
+</div>

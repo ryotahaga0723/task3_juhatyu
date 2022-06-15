@@ -1,7 +1,7 @@
 class CreateSupplies < ActiveRecord::Migration[6.0]
   def change
-    create_table :supplies, id: false do |t|
-      t.string :code, null: false, primary_key: true, unique: true
+    create_table :supplies do |t|
+      t.string :code, null: false,  unique: true
       t.string :name, null: false
       t.bigint :price, null: false
       t.bigint :set, null: false

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_14_072803) do
+ActiveRecord::Schema.define(version: 2022_06_15_040942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,17 @@ ActiveRecord::Schema.define(version: 2022_06_14_072803) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
+  end
+
+  create_table "approvals", force: :cascade do |t|
+    t.bigint "approval", default: 0, null: false
+    t.bigint "user_id", null: false
+    t.string "approvalable_type", null: false
+    t.bigint "approvalable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["approvalable_type", "approvalable_id"], name: "index_approvals_on_approvalable_type_and_approvalable_id"
+    t.index ["user_id"], name: "index_approvals_on_user_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -54,6 +65,28 @@ ActiveRecord::Schema.define(version: 2022_06_14_072803) do
     t.index ["order_id"], name: "index_deliveries_on_order_id"
   end
 
+  create_table "invoice_contents", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "set", null: false
+    t.bigint "price", null: false
+    t.bigint "quantity", null: false
+    t.bigint "invoice_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["invoice_id"], name: "index_invoice_contents_on_invoice_id"
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.string "code", null: false
+    t.bigint "user_id", null: false
+    t.bigint "order_id", null: false
+    t.bigint "total_sum"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_invoices_on_order_id"
+    t.index ["user_id"], name: "index_invoices_on_user_id"
+  end
+
   create_table "order_supplies", force: :cascade do |t|
     t.boolean "availability", default: false, null: false
     t.bigint "quantity", null: false
@@ -65,7 +98,8 @@ ActiveRecord::Schema.define(version: 2022_06_14_072803) do
     t.index ["supply_id"], name: "index_order_supplies_on_supply_id"
   end
 
-  create_table "orders", primary_key: "code", id: :string, force: :cascade do |t|
+  create_table "orders", force: :cascade do |t|
+    t.string "code", null: false
     t.date "date", null: false
     t.bigint "total_price"
     t.bigint "user_id", null: false
@@ -124,7 +158,8 @@ ActiveRecord::Schema.define(version: 2022_06_14_072803) do
     t.index ["user_id"], name: "index_stocks_on_user_id"
   end
 
-  create_table "supplies", primary_key: "code", id: :string, force: :cascade do |t|
+  create_table "supplies", force: :cascade do |t|
+    t.string "code", null: false
     t.string "name", null: false
     t.bigint "price", null: false
     t.bigint "set", null: false

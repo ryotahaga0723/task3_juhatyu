@@ -1,0 +1,57 @@
+<%= form_with(model: invoice, local: true) do |form| %>
+  <% if invoice.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+
+      <ul>
+        <% invoice.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :請求書番号 %>
+    <%= form.text_field :code, value: order.code %>
+  </div>
+
+  <% order_supplies.each do |f| %>
+    <%= form.fields_for :invoice_contents do |content| %>
+      <div class="field">
+        <%= content.label :商品名 %>
+        <%= content.text_field :name, value: f.supply.name %>
+      </div>
+  
+      <div class="field">
+        <%= content.label :セット数 %>
+        <%= content.number_field :set, value: f.supply.set %>
+      </div>
+  
+      <div class="field">
+        <%= content.label :単価 %>
+        <%= content.number_field :price, value: f.supply.price %>
+      </div>
+  
+      <div class="field">
+        <%= content.label :個数 %>
+        <%= content.number_field :quantity, value: f.quantity %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div id="content_forms">
+    <%= form.fields_for :invoice_contents do |content| %>  
+      <%= render 'content', {content: content, order: order} %>
+    <% end %>
+  </div>
+  <%= link_to_add_association '+商品入力フォームの追加', form, :invoice_contents, partial: "content", data: {association_insertion_node: '#content_forms', association_insertion_method: 'after'}, form_name: 'content' %>
+
+  <br>
+  <%= form.text_field :user_id, value: current_user.id %>
+  <%= form.text_field :order_id, value: order.code %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

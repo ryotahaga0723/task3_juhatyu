@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :schedules
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'products#index'
 
@@ -7,16 +6,23 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :new, :create, :show, :edit, :update]
   resources :companies
   resources :products
-  resources :orders
+  resources :orders do
+    collection do
+      get :index_receive
+      get :index_supply
+    end
+  end
   resources :categories
   resources :supplies do
     collection do
-    get :ajax
+      get :ajax
     end
   end
   resources :statuses do
     member do
       post :update_1
+      post :update_3
+      post :update_6
     end
   end
   resources :deliveries
@@ -24,6 +30,13 @@ Rails.application.routes.draw do
     member do
       post :update_check
       post :update_noncheck
+    end
+  end
+  resources :invoices
+  resources :approvals do
+    member do
+      post :update_invoice
+      post :update_order
     end
   end
 end

@@ -26,9 +26,7 @@
     <%= form.number_field :delivery_number %>
   </div>
 
-  <% order = Order.find(params[:format]) %>
   <%= form.hidden_field :order_id, value: order.id %>
-
 
   <div class="actions">
     <%= form.submit %>

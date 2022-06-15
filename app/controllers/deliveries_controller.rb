@@ -2,21 +2,32 @@ class DeliveriesController < ApplicationController
 
   def new
     @delivery = Delivery.new
+    @order = Order.find(params[:format])
   end
+
+  def edit
+    @delivery = Delivery.find(params[:id])
+  end
+
 
   def create
     @delivery = Delivery.new(delivery_params)
 
-    respond_to do |format|
-      if @delivery.save
-        format.html { redirect_to supplies_url, notice: "販売商品を登録しました" }
-        format.json { render :show, status: :created, location: @supply }
+    if @delivery.save
+      @status = Status.find(@delivery.order.status.id)
+      @status.update!(
+          status: 2
+        )
+        redirect_to index_receive_orders_path(current_user.id)
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @supply.errors, status: :unprocessable_entity }
+        render :new, status: :unprocessable_entity
       end
-    end
   end
+
+  def show
+    @delivery = Delivery.find(params[:id])
+  end
+  
   
   private
   def delivery_params
