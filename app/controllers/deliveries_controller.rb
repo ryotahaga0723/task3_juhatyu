@@ -18,6 +18,7 @@ class DeliveriesController < ApplicationController
       @status.update!(
           status: 2
         )
+      
         redirect_to index_receive_orders_path(current_user.id)
       else
         render :new, status: :unprocessable_entity

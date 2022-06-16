@@ -7,6 +7,13 @@ class SchedulesController < ApplicationController
     @schedules = Schedule.where(order_id: @order.id)
   end
 
+  def index_day
+    @day = params[:day] ? Date.parse(params[:day]) : Time.zone.today
+    @schedules = Schedule.where(date: @day.all_day).where(check_list: 0)
+    @schedules_check = Schedule.where(date: @day.all_day).where(check_list: 1)
+  end
+
+
   # GET /schedules/1 or /schedules/1.json
   def show
   end
@@ -58,6 +65,18 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.find(params[:id])
     @schedule.update!(check_list: 0)
     redirect_to schedules_url(@schedule.order_id)
+  end
+
+  def update_check_task
+    @schedule = Schedule.find(params[:id])
+    @schedule.update!(check_list: 1)
+    redirect_to index_day_schedules_url(@schedule.order_id)
+  end
+
+  def update_noncheck_task
+    @schedule = Schedule.find(params[:id])
+    @schedule.update!(check_list: 0)
+    redirect_to index_day_schedules_url(@schedule.order_id)
   end
 
 

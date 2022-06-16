@@ -112,6 +112,16 @@ Supply.create!(
   product_id: 2,
   stock_id: 2,
 )
+Supply.create!(
+  code: '100139',
+  name: "リンゴ",
+  price: 300,
+  set: 2,
+  content: "青森県産のトキ",
+  product_id: 1,
+  stock_id: 1,
+)
+
 
 Order.create!(
   code: '1000001',
@@ -121,7 +131,7 @@ Order.create!(
   order_supplies_attributes: [{
     availability: true,
     quantity: 20,
-    supply_id: 1
+    supply_id: 1,
   }],
   status_attributes: {
     status: 0
@@ -139,11 +149,29 @@ Order.create!(
     {
       availability: true,
       quantity: 20,
-      supply_id: 2
+      supply_id: 2,
     },{
       availability: true,
       quantity: 30,
-      supply_id: 1
+      supply_id: 1,
+    }],
+  status_attributes: {
+    status: 0
+  },
+  shipping_attributes: {
+    name: '社員B',
+  }
+)
+Order.create!(
+  code: '1000003',
+  date: "2022-06-15",
+  total_price: 2000,
+  user_id: 2,
+  order_supplies_attributes: [
+    {
+      availability: true,
+      quantity: 15,
+      supply_id: 3,
     }],
   status_attributes: {
     status: 0

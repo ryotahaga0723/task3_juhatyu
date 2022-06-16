@@ -14,14 +14,22 @@ class OrdersController < ApplicationController
 
   def index_supply
     @supply = Supply.find(params[:format])
-    @order_supplies = OrderSupply.left_outer_joins(:supply).where(supplies: {name: @supply.name})
+    @product = @supply.product
+    @order_supplies = OrderSupply.left_outer_joins(supply: :product).where(products: {name: @product.name}).where(products: {company_id: @product.company.id})
   end
 
 
   #受注業者側
+  ##受注日ごと
   def index_receive
     @day = params[:day] ? Date.parse(params[:day]) : Time.zone.today
     @orders = Order.left_outer_joins(:approval).where(created_at: @day.all_day).where(approvals: {approval: 1})
+  end
+
+  #受注月ごと
+  def index_receive_month
+    @month = params[:month] ? Date.parse(params[:month]) : Time.zone.today
+    @orders = Order.left_outer_joins(:approval).where(created_at: @month.all_month).where(approvals: {approval: 1})
   end
 
 
@@ -36,6 +44,7 @@ class OrdersController < ApplicationController
     @order.build_telephone
     @order.build_shipping
     @order.build_status
+    @order.order_wills.build
     Supply.count.times{@order.order_supplies.build}
   end
 
@@ -113,7 +122,8 @@ class OrdersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def order_params
       params.require(:order).permit(:code, :date, :total_price, :user_id, 
-        order_supplies_attributes: [:id, :availability, :quantity, :supply_id], 
+        order_supplies_attributes: [:id, :availability, :quantity, :supply_id, :_destroy], 
+        order_wills_attributes: [:id, :quantity, :product_id], 
         status_attributes: [:id, :status],
         address_attributes: [:id, :postcode, :prefecture_code, :prefecture, :city, :town, :address, :building, :room_number], 
         telephone_attributes: [:id, :number], 

@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<h1>to do list 一覧 <%= @day.strftime("%m/%d") %></h1>
+
+  <h2>タスク完了</h2>
+  
+  <table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>注文コード</th>
+      <th>何を</th>
+      <th>どうする</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @schedules_check.each do |schedule| %>
+      <tr>
+        <td><%= link_to schedule.check_list, update_noncheck_task_schedule_path(schedule), method: :post %></td>
+        <td><%= link_to schedule.order.code, order_path(schedule.order) %></td>
+        <td><%= schedule.what %></td>
+        <td><%= schedule.do %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>タスク未着手</h2>
+  
+<table>
+<thead>
+  <tr>
+    <th></th>
+    <th>注文コード</th>
+    <th>何を</th>
+    <th>どうする</th>
+    <th colspan="3"></th>
+  </tr>
+</thead>
+
+<tbody>
+  <% @schedules.each do |schedule| %>
+    <tr>
+      <td><%= link_to schedule.check_list, update_check_task_schedule_path(schedule), method: :post %></td>
+      <td><%= link_to schedule.order.code, order_path(schedule.order) %></td>
+      <td><%= schedule.what %></td>
+      <td><%= schedule.do %></td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+
+<br>
+
+<%= link_to '戻る', index_receive_orders_path(current_user.id) %>

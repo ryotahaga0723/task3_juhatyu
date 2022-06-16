@@ -1,11 +1,10 @@
 <p id="notice"><%= notice %></p>
 
-<h1>受注一覧 <%= @day.strftime("%m/%d") %></h1>
+<h1>受注一覧 <%= @month.strftime("%m月") %></h1>
 
-<%= link_to "前日", index_receive_orders_path(day: @day.prev_day) %>
-<%= link_to "翌日", index_receive_orders_path(day: @day.next_day) %>
-<%= link_to "受注月ごと", index_receive_month_orders_path %>
-<%= link_to "to do list", index_day_schedules_path %>
+<%= link_to "前日", index_receive_month_orders_path(month: @month.prev_month) %>
+<%= link_to "翌日", index_receive_month_orders_path(month: @month.next_month) %>
+<%= link_to "受注日ごと", index_receive_orders_path %>
 
 <table>
   <thead>

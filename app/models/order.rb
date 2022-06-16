@@ -12,13 +12,14 @@ class Order < ApplicationRecord
   has_many :schedules, dependent: :destroy
   has_one :invoice, dependent: :destroy
   has_one :approval, as: :approvalable
-
+  has_many :order_wills, dependent: :destroy
 
   accepts_nested_attributes_for :order_supplies
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :telephone
   accepts_nested_attributes_for :shipping
   accepts_nested_attributes_for :status
+  accepts_nested_attributes_for :order_wills
   validates_associated :order_supplies
   validates_associated :address
   validates_associated :telephone

@@ -43,6 +43,13 @@
     <%= form.hidden_field :code, value: @order_code %>
   </div>
 
+  <% Product.all.each do |product| %>
+    <%= form.fields_for :order_wills do |form| %>
+      <%= form.number_field :quantity %>
+      <%= form.number_field :product_id, value: product.id %>
+    <% end %>
+  <% end %>
+
   <%= form.fields_for :status do |form| %>
     <%= form.hidden_field :status %>
   <% end %>

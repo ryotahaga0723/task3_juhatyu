@@ -4,7 +4,6 @@ class Supply < ApplicationRecord
   has_many :order_supplies, dependent: :destroy
   has_many :orders, through: :order_supplies
 
-
   validates :code, presence: true, uniqueness: true
   validates :name, presence: true
   validates :price, presence: true
