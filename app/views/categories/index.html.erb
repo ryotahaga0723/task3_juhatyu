@@ -1,27 +1,32 @@
-<p id="notice"><%= notice %></p>
+<section class="section">
+  <div class ="section_inner">
 
-<h1>カテゴリー一覧</h1>
+    <h1>カテゴリー一覧</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>カテゴリー名</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <p id="notice"><%= notice %></p>
 
-  <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td><%= category.name %></td>
-        <td><%= link_to '編集', edit_category_path(category) %></td>
-        <td><%= link_to '削除', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+    <table class="osare3-table col4t">
+      <thead>
+        <tr>
+          <th>カテゴリー名</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-<br>
+      <tbody>
+        <% @categories.each do |category| %>
+          <tr>
+            <td><%= category.name %></td>
+            <td><%= link_to '編集', edit_category_path(category) %></td>
+            <td><%= link_to '削除', category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-<%= link_to '新規作成', new_category_path %>
-<%= link_to '在庫一覧', products_path %>
+    <br>
+
+    <%= link_to '新規作成', new_category_path %>
+    <%= link_to '在庫一覧', products_path %>
+  </div>
+</section>

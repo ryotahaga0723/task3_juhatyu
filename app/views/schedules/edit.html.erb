@@ -1,6 +1,11 @@
-<h1>Editing Schedule</h1>
+<section class="section">
+  <div class ="section_inner">
 
-<%= render 'form', schedule: @schedule %>
+    <h1>スケジュール編集</h1>
 
-<%= link_to 'Show', @schedule %> |
-<%= link_to 'Back', schedules_path %>
+    <%= render 'form', schedule: @schedule, order: @order %>
+
+    <%= link_to '戻る', :back %>
+
+  </div>
+</section>

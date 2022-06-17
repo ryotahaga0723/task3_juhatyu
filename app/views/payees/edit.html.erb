@@ -1,10 +1,11 @@
 <section class="section">
   <div class ="section_inner">
+
     <h1>取引先編集</h1>
 
-    <%= render 'form', company: @company %>
+    <%= render 'form', payee: @payee %>
 
-    <%= link_to '戻る', companies_path %>
-  
+    <%= link_to '戻る', company_path(current_user.company) %>
+ 
   </div>
 </section>

@@ -1,6 +1,12 @@
-<% @order = Order.find(params[:order]) %>
-<h1><%= @order.code %>スケジュール登録</h1>
+<section class="section">
+  <div class ="section_inner">
 
-<%= render 'form', schedule: @schedule, order: @order %>
+    <h1><%= @order.code %>スケジュール登録</h1>
 
-<%= link_to '戻る', schedules_path %>
+    <%= render 'form', schedule: @schedule, order: @order %>
+
+    <%= link_to '戻る', schedules_path(format: @order.id) %>
+
+  </div>
+</section>
+ 

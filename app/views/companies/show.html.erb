@@ -1,8 +1,12 @@
 <section class="section">
   <div class="section_inner">
     <div class= "title">
-      <h1>取引先詳細</h1>
-    </div>
+      <% if current_user.company != @company %> 
+        <h1>取引先詳細</h1>
+      <% else %>
+        <h1>会社情報詳細</h1>
+      <% end %>
+      </div>
     <table class="osare3-table col4t show">
       <tbody>
 
@@ -33,10 +37,48 @@
           </td>
         </tr>
 
+        <% if current_user.admin == true %>
+          <tr>
+            <td><strong>口座情報</strong></td>
+          </tr>
+
+          <tr>
+            <td>銀行名</td>
+            <td><%= @company.payee.bank %></td>
+          </tr>
+
+          <tr>
+            <td>支店名</td>
+            <td><%= @company.payee.branch %></td>
+          </tr>
+
+          <tr>
+            <td>口座種類</td>
+            <td><%= @company.payee.kind %></td>
+          </tr>
+
+          <tr>
+            <td>口座番号</td>
+            <td><%= @company.payee.number %></td>
+          </tr>
+
+
+
+        <% end %>
+   
+
       <tbody>
     </table>
 
+    <% if current_user.company.code == 100 && current_user.admin == true %>
+      <%= link_to '口座編集', edit_payee_path(@company.payee) %>
+    <% end %>
+
     <%= link_to '編集', edit_company_path(@company) %> |
-    <%= link_to '戻る', companies_path %>
+
+    <% if current_user.company.code == 100 %>
+      <%= link_to '戻る', companies_path %>
+    <% end %>
+
   </div>
 </section>

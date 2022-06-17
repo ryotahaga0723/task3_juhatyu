@@ -1,13 +1,12 @@
 <section class="section">
-<div class="section_inner">
-  <div class= "title">
-    <h1>注文詳細</h1>
-  </div>
+  <div class="section_inner">
+    <div class= "title">
+      <h1>注文詳細</h1>
+    </div>
 
-  <% flash.each do |key, value| %>
-    <%= content_tag(:div, value, class: "#{key}") %>
-  <% end %>   
-  
+    <% flash.each do |key, value| %>
+      <%= content_tag(:div, value, class: "#{key}") %>
+    <% end %>   
 
     <table class="osare3-table col4t show">
       <tbody>
@@ -65,18 +64,23 @@
             <td><%= f.supply.price %></td>
             <td><%= f.supply.set %></td>
             <td><%= f.quantity %></td>
-            <td><%= link_to "商品ごとの発注一覧", index_supply_orders_path(f.supply)%></td>
+            <% if current_user.company.code != 100 %>
+              <td><%= link_to "商品ごとの発注一覧", index_supply_orders_path(f.supply)%></td>
+            <% end %>
 
           </tr>
         <% end %>
       <tbody>
     </table>
 
-    <%= link_to '編集', edit_order_path(@order) %> |
+    <% if @order.approval == 1 %>
+      <%= link_to '編集', edit_order_path(@order) %> |
+    <% end %>
+
     <% if current_user.company.code == 100 %>
       <%= link_to '戻る', index_receive_orders_path %>
     <% else %>
       <%= link_to '戻る', orders_path %>
     <% end %>
-    </div>
+  </div>
 </section>

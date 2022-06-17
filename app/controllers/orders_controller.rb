@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
   ##月ごとの発注一覧
   def index
     @month = params[:month] ? Date.parse(params[:month]) : Time.zone.today
-    @orders = Order.left_outer_joins(:approval, :user).where(created_at: @month.all_month).where(approvals: {approval: 0}).where.not(user_id: current_user.id).where(users: {company_id: current_user.company.id})
+    @orders = Order.left_outer_joins(:approval, :user).where(created_at: @month.all_month).where(approvals: {approval: 0}).where(users: {company_id: current_user.company.id})
     @orders_approval = Order.left_outer_joins(:approval, :user).where(created_at: @month.all_month).where(approvals: {approval: 1}).where(users: {company_id: current_user.company.id})
     @orders_receive = Order.left_outer_joins(:status, :user).where(created_at: @month.all_month).where.not(statuses: {status: "新規受付"}).where.not(statuses: {status: "受注不可"}).where(users: {company_id: current_user.company.id})
     @supplies = Supply.left_outer_joins(order_supplies: [order: :user]).where(users: {company_id: current_user.company.id}).group(:name).order('count(name) desc')
@@ -44,7 +44,6 @@ class OrdersController < ApplicationController
     @order.build_telephone
     @order.build_shipping
     @order.build_status
-    @order.order_wills.build
     Supply.count.times{@order.order_supplies.build}
   end
 

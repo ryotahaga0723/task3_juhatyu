@@ -5,5 +5,6 @@ class InvoiceContent < ApplicationRecord
   validates :set, presence: true
   validates :price, presence: true
   validates :quantity, presence: true
+  validates :code, presence: true
 
 end

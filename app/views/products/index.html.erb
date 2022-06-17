@@ -1,57 +1,63 @@
-<p id="notice"><%= notice %></p>
+<section class="section">
+  <div class ="section_inner">
 
-<h1>在庫一覧</h1>
+    <h1>在庫一覧</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>カテゴリー</th>
-      <th>商品名</th>
-      <th>在庫数</th>
-      <th>発注予定数</th>
-      <th>詳細</th>
-      <th>在庫編集</th>
-      <th>削除</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <p id="notice"><%= notice %></p>
 
-  <tbody>
-    <% @products.each do |product| %>
-      <tr>
-        <td><%= product.category.name %></td>
-        <td><%= product.name %></td>
+    <table class="osare3-table col4t">
+      <thead>
+        <tr>
+          <th>カテゴリー</th>
+          <th>商品名</th>
+          <th>在庫数</th>
+          <th>発注予定数</th>
+          <th>詳細</th>
+          <th>在庫編集</th>
+          <th>削除</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-        <% @order_done = 0 %>
-        <% product.supplies.each do |supply| %>
-          <% supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 2}).distinct
-          .or(supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 3}).distinct)
-          .or(supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 4}).distinct)
-          .or(supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 5}).distinct).each do |o| %>
-            <% @order_done += o.quantity * o.supply.set  %>
-          <% end %>
-        <% end %>
+      <tbody>
+        <% @products.each do |product| %>
+          <tr>
+            <td><%= product.category.name %></td>
+            <td><%= product.name %></td>
 
-        <td><%= product.stock.quantity - @order_done %></td>
+            <% @order_done = 0 %>
+            <% product.supplies.each do |supply| %>
+              <% supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 2}).distinct
+              .or(supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 3}).distinct)
+              .or(supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 4}).distinct)
+              .or(supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 5}).distinct).each do |o| %>
+                <% @order_done += o.quantity * o.supply.set  %>
+              <% end %>
+            <% end %>
 
-        <% @order_will = 0 %>
-        <% product.supplies.each do |supply| %>
-          <% supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 0}).distinct
-          .or(supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 1}).distinct).each do |o| %>
-            <% @order_will += o.quantity * o.supply.set %>
-          <% end %>
-        <% end %>
+            <td><%= product.stock.quantity - @order_done %></td>
+
+            <% @order_will = 0 %>
+            <% product.supplies.each do |supply| %>
+              <% supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 0}).distinct
+              .or(supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 1}).distinct).each do |o| %>
+                <% @order_will += o.quantity * o.supply.set %>
+              <% end %>
+            <% end %>
         
-        <td><%= @order_will %></td>
-        <td><%= link_to '詳細', product %></td>
-        <td><%= link_to '編集', edit_product_path(product) %></td>
-        <td><%= link_to '削除', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+            <td><%= @order_will %></td>
+            <td><%= link_to '詳細', product %></td>
+            <td><%= link_to '編集', edit_product_path(product) %></td>
+            <td><%= link_to '削除', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
-<br>
+    <br>
 
-<%= link_to '新規登録', new_product_path %>
-<%= link_to 'カテゴリー一覧', categories_path %>
+    <%= link_to '新規登録', new_product_path %>
+    <%= link_to 'カテゴリー一覧', categories_path %>
+
+  </div>
+</section>

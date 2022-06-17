@@ -1,6 +1,7 @@
 class CreateInvoiceContents < ActiveRecord::Migration[6.0]
   def change
     create_table :invoice_contents do |t|
+      t.string :code, null: false
       t.string :name, null: false
       t.bigint :set, null: false
       t.bigint :price, null: false

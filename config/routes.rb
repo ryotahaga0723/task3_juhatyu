@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :new, :create, :show, :edit, :update]
   resources :companies
   resources :products
+  resources :invoices
+  resources :categories
+  resources :deliveries
+  resources :payees
 
   resources :orders do
     collection do
@@ -14,8 +18,6 @@ Rails.application.routes.draw do
       get :index_receive_month
     end
   end
-
-  resources :categories
 
   resources :supplies do
 
@@ -32,22 +34,17 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :deliveries
-
   resources :schedules do
     member do
       post :update_check
       post :update_noncheck
       post :update_check_task
       post :update_noncheck_task
-
     end
     collection do
       get :index_day
     end
   end
-
-  resources :invoices
 
   resources :approvals do
     member do

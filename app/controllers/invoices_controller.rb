@@ -8,18 +8,23 @@ class InvoicesController < ApplicationController
 
   # GET /invoices/1 or /invoices/1.json
   def show
+    @company = Company.find(100)
   end
 
   # GET /invoices/new
   def new
     @invoice = Invoice.new
     @invoice.invoice_contents.build
+    @invoice.build_address
+    @invoice.build_telephone
     @order = Order.find(params[:format])
-    @order_supplies = OrderSupply.where(order_id: @order.code)
+    @order_supplies = OrderSupply.where(order_id: @order.id)
   end
 
   # GET /invoices/1/edit
   def edit
+    @order = Order.find(params[:format])
+    @order_supplies = OrderSupply.where(order_id: @order.id)
   end
 
   # POST /invoices or /invoices.json
@@ -27,33 +32,52 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.new(invoice_params)
     
     if @invoice.save
+
+      @total_sum = 0
+      @invoice.invoice_contents.each do |content|
+        @total_sum += content.price * content.quantity
+      end
+
+      @invoice.update!(
+        total_sum: @total_sum
+      )
+
       Approval.create!(
         approval: 0,
         user_id: current_user.id,
         approvalable_type: "Invoice",
-        approvalable_id: @invoice.code,
+        approvalable_id: @invoice.id,
       )
   
       @status = Status.find(@invoice.order.status.id)
       @status.update!(
         status: 4
       )
+
       redirect_to index_receive_orders_path(current_user.id)
+
     else
+      @order = Order.find(@invoice.order_id)
       render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /invoices/1 or /invoices/1.json
   def update
-    respond_to do |format|
-      if @invoice.update(invoice_params)
-        format.html { redirect_to invoice_url(@invoice), notice: "Invoice was successfully updated." }
-        format.json { render :show, status: :ok, location: @invoice }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @invoice.errors, status: :unprocessable_entity }
+    if @invoice.update(invoice_params)
+
+      @total_sum = 0
+      @invoice.invoice_contents.each do |content|
+        @total_sum += content.price * content.quantity
       end
+
+      @invoice.update!(
+        total_sum: @total_sum
+      )
+
+      redirect_to invoice_url(@invoice), notice: "請求書を更新しました"
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -62,7 +86,7 @@ class InvoicesController < ApplicationController
     @invoice.destroy
 
     respond_to do |format|
-      format.html { redirect_to invoices_url, notice: "Invoice was successfully destroyed." }
+      format.html { redirect_to invoices_url, notice: "請求書を削除しました" }
       format.json { head :no_content }
     end
   end
@@ -75,6 +99,9 @@ class InvoicesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def invoice_params
-      params.require(:invoice).permit(:code, :total_sum, :user_id, :order_id, invoice_contents_attributes: [:id, :name, :set, :price, :quantity, :_destroy])
+      params.require(:invoice).permit(:code, :total_sum, :user_id, :order_id, 
+        invoice_contents_attributes: [:code, :id, :name, :set, :price, :quantity, :_destroy], 
+        address_attributes: [:id, :postcode, :prefecture_code, :prefecture, :city, :town, :address, :building, :room_number], 
+        telephone_attributes: [:id, :number])
     end
 end

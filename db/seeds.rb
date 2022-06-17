@@ -9,6 +9,14 @@ Company.create!(
   code: 100,
   name: '株式会社A',
 )
+Payee.create!(
+  bank: '未設定',
+  branch: '未設定',
+  kind: 0,
+  number: '0000000',
+  company_id: 100,
+)
+
 Company.create!(
   code: 200,
   name: '株式会社B',
@@ -53,7 +61,7 @@ Address.create!(
 Telephone.create!(
   number: '09011111111',
   telephoneable_type: 'Company',
-  telephoneable_id: 200,
+  telephoneable_id: 100,
 )
 Address.create!(
   postcode: 1000001,
@@ -214,4 +222,10 @@ Approval.create!(
   user_id: 2,
   approvalable_type: 'Order',
   approvalable_id: 2,
+)
+Approval.create!(
+  approval: 0,
+  user_id: 2,
+  approvalable_type: 'Order',
+  approvalable_id: 3,
 )

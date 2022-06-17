@@ -1,5 +1,11 @@
-<h1>請求書作成</h1>
+<section class="section">
+  <div class ="section_inner">
 
-<%= render 'form', invoice: @invoice, order: @order, order_supplies: @order_supplies %>
+    <h1>請求書作成</h1>
 
-<%= link_to '戻る', invoices_path %>
+    <%= render 'form', invoice: @invoice, order: @order, order_supplies: @order_supplies %>
+
+    <%= link_to '戻る', index_receive_orders_path %>
+
+  </div>
+</section>

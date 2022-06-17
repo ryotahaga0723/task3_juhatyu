@@ -1,3 +1,53 @@
 // Place all the styles related to the invoices controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.invoice{
+    width: 500px;
+    border: 1px solid black;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #fff;
+}
+
+.title{
+    text-align: center;
+}
+
+.invoice-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.supplyer{
+    padding-top: 10px;
+}
+
+.invoice-content-flame{
+    padding-top: 10px;
+}
+
+table{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.invoice-content{
+    border: 1px solid black
+}
+
+.payee{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.total_sum{
+    padding-top: 20px;
+    border-bottom: 1px solid black;
+    width: 180px;
+}

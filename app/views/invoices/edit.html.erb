@@ -1,6 +1,11 @@
-<h1>Editing Invoice</h1>
+<section class="section">
+  <div class ="section_inner">
 
-<%= render 'form', invoice: @invoice %>
+    <h1>請求書編集</h1>
 
-<%= link_to 'Show', @invoice %> |
-<%= link_to 'Back', invoices_path %>
+    <%= render 'form', invoice: @invoice, order: @order, order_supplies: @order_supplies %>
+
+    <%= link_to '戻る', invoices_path %>
+
+  </div>
+</section>

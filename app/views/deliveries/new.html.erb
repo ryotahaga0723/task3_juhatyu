@@ -1,5 +1,11 @@
-<h1>配達情報新規登録</h1>
+<section class="section">
+  <div class ="section_inner">
 
-<%= render 'form', delivery: @delivery, order: @order %>
+    <h1>配達情報新規登録</h1>
 
-<%= link_to '戻る', companies_path %>
+    <%= render 'form', delivery: @delivery, order: @order %>
+
+    <%= link_to '戻る', index_receive_orders_path %>
+
+  </div>
+</section>

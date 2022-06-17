@@ -1,19 +1,79 @@
-<p id="notice"><%= notice %></p>
+<section class="section">
+  <div class ="section_inner">
 
-<p>
-  <strong>Code:</strong>
-  <%= @invoice.code %>
-</p>
+    <div class="invoice">
+      <div class="title">
+        <h1>請求書</h1>
+      </div>
 
-<p>
-  <strong>User:</strong>
-  <%= @invoice.user_id %>
-</p>
+      <div class="invoice-header">
+        <div class="demander">
+          <%= @invoice.order.user.company.name %>御中<br>
+          ご担当者：<%= @invoice.order.user.name %>様<br>
+        </div>
 
-<p>
-  <strong>Order:</strong>
-  <%= @invoice.order_id %>
-</p>
+        <div class="invoice-right">
+          <div class="invoice-data">
+            請求書 No.<%= @invoice.code %><br>
+            請求日 <%= @invoice.created_at.strftime("%Y年%m月%d日") %><br>
+          </div>
 
-<%= link_to 'Edit', edit_invoice_path(@invoice) %> |
-<%= link_to 'Back', invoices_path %>
+          <div class="supplyer">
+            <%= @company.name %><br>
+            〒<%= @company.address.postcode %><br>
+            住所：
+              <%= @company.address.prefecture %>
+              <%= @company.address.city %>
+              <%= @company.address.town %>
+              <%= @company.address.address %><br>
+              <%= @company.address.building %>
+              <%= @company.address.room_number %><br>
+            担当者：<%= @invoice.user.name %><br>
+            TEL：<%= @company.telephone.number %><br>
+            Mail：<%= @invoice.user.email %>
+          </div>
+        </div>
+      </div>
+
+      <div class="total_sum">
+        合計金額　　　￥<%= @invoice.total_sum %>
+      </div>
+
+      <div class="invoice-content-flame">
+        <table class="invoice-content" border="1">
+          <thead>
+            <th>商品コード</th>
+            <th>商品名</th>
+            <th>個数</th>
+            <th>単価</th>
+            <th>金額</th>
+          </thead>
+
+          <tbody>
+            <% @invoice.invoice_contents.each do |content| %>
+              <tr>
+                <td><%= content.code %></td>
+                <td><%= content.name %></td>
+                <td><%= content.quantity %></td>
+                <td><%= content.price %></td>
+                <td><%= content.quantity * content.price %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+ 
+      <div class="payee">
+        お振込先<br>
+        <%= @company.payee.bank %>銀行<br>
+        <%= @company.payee.branch %>支店<br>
+        <%= @company.payee.kind %><br>
+        <%= @company.payee.number %><br>
+      </div>
+    </div>
+
+    <%= link_to '編集', edit_invoice_path(@invoice) %> |
+    <%= link_to '戻る', invoices_path %>
+
+  </div>
+</section>

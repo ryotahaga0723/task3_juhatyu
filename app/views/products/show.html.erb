@@ -1,13 +1,13 @@
 <section class="section">
-<div class="section_inner">
-  <div class= "title">
-    <h1>在庫詳細</h1>
-  </div>
+  <div class="section_inner">
 
-  <% flash.each do |key, value| %>
-    <%= content_tag(:div, value, class: "#{key}") %>
-  <% end %>   
-  
+    <div class= "title">
+      <h1>在庫詳細</h1>
+    </div>
+
+    <% flash.each do |key, value| %>
+      <%= content_tag(:div, value, class: "#{key}") %>
+    <% end %>   
 
     <table class="osare3-table col4t show">
       <tbody>

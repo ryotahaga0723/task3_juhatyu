@@ -1,19 +1,22 @@
 <section class="section">
-<div class ="section_inner">
-  <div class= "sign_in">
-    <div class= "title">
-      <h1>アカウント登録</h1>
-    </div>
-    <% if @user.errors.any? %>
-      <div id="error_explanation">
-        <h2>エラーが発生しました。</h2>
-        <ul>
-          <% @user.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
+  <div class ="section_inner">
+    <div class= "sign_in">
+
+      <div class= "title">
+        <h1>アカウント登録</h1>
       </div>
-    <% end %>
+
+      <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2>エラーが発生しました。</h2>
+
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
       <%= form_with(model: @user, local: true) do |f| %>
         <table>
@@ -43,6 +46,6 @@
                 
         <%= f.submit "新規登録" %>
       <% end %>
-  </div>
+    </div>
   </div>
 </section>

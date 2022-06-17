@@ -4,7 +4,7 @@ class SchedulesController < ApplicationController
   # GET /schedules or /schedules.json
   def index
     @order = Order.find(params[:format])
-    @schedules = Schedule.where(order_id: @order.id)
+    @schedules = Schedule.where(order_id: @order.id).order(date: "ASC")
   end
 
   def index_day
@@ -21,10 +21,13 @@ class SchedulesController < ApplicationController
   # GET /schedules/new
   def new
     @schedule = Schedule.new
+    @order = Order.find(params[:order])
+
   end
 
   # GET /schedules/1/edit
   def edit
+    @order = Order.find(params[:order])
   end
 
   # POST /schedules or /schedules.json
@@ -36,6 +39,7 @@ class SchedulesController < ApplicationController
         format.html { redirect_to schedules_url(@schedule.order_id), notice: "スケジュールを作成しました" }
         format.json { render :show, status: :created, location: @schedule }
       else
+        @order = Order.find(@schedule.order_id)
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @schedule.errors, status: :unprocessable_entity }
       end

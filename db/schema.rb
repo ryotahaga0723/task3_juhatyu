@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_16_051410) do
+ActiveRecord::Schema.define(version: 2022_06_17_043438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 2022_06_16_051410) do
   end
 
   create_table "invoice_contents", force: :cascade do |t|
+    t.string "code", null: false
     t.string "name", null: false
     t.bigint "set", null: false
     t.bigint "price", null: false
@@ -98,16 +99,6 @@ ActiveRecord::Schema.define(version: 2022_06_16_051410) do
     t.index ["supply_id"], name: "index_order_supplies_on_supply_id"
   end
 
-  create_table "order_wills", force: :cascade do |t|
-    t.bigint "quantity", default: 0
-    t.bigint "order_id", null: false
-    t.bigint "product_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["order_id"], name: "index_order_wills_on_order_id"
-    t.index ["product_id"], name: "index_order_wills_on_product_id"
-  end
-
   create_table "orders", force: :cascade do |t|
     t.string "code", null: false
     t.date "date", null: false
@@ -116,6 +107,17 @@ ActiveRecord::Schema.define(version: 2022_06_16_051410) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "payees", force: :cascade do |t|
+    t.string "bank", null: false
+    t.string "branch", null: false
+    t.bigint "kind", null: false
+    t.string "number", null: false
+    t.bigint "company_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["company_id"], name: "index_payees_on_company_id"
   end
 
   create_table "products", force: :cascade do |t|
