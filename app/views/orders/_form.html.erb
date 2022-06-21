@@ -19,13 +19,12 @@
           <th>商品名</th>
           <th>単価</th>
           <th>セット</th>
-          <th>平均個数</th>
-          <th colspan="3"  id="order-form-last"></th>
+          <th id="order-form-last">平均個数</th>
         </tr>
       </thead>
 
       <tbody>
-        <%= render partial:"orders/detail", locals: {supply: @supply} %>
+        <%= render partial:"orders/detail", locals: {supply: supply} %>
       </tbody>
     </table>
 

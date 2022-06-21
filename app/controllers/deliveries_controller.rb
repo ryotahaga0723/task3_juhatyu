@@ -13,18 +13,30 @@ class DeliveriesController < ApplicationController
 
   def create
     @delivery = Delivery.new(delivery_params)
+    @order = @delivery.order
 
     if @delivery.save
-      @status = Status.find(@delivery.order.status.id)
+      @status = Status.find(@order.status.id)
       @status.update!(
           status: 2
         )
-      
-        redirect_to index_receive_orders_path(current_user.id)
-      else
+      Stock.all.each do |st|
+        st.supplies.each do |su|
+          @eachsum = 0
+          su.order_supplies.left_outer_joins(:order).where(orders: {id: @order.id}).each do |os|
+            @eachsum = os.quantity * os.supply.set
+            st.update!(
+              quantity: st.quantity - @eachsum
+            )
+          end
+        end
+      end
+
+      redirect_to index_receive_orders_path(current_user.id)
+    else
         @order = Order.find(@delivery.order_id)
         render :new, status: :unprocessable_entity
-      end
+    end
   end
 
   def update

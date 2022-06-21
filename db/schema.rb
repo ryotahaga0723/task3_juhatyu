@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_17_043438) do
+ActiveRecord::Schema.define(version: 2022_06_21_054732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,14 @@ ActiveRecord::Schema.define(version: 2022_06_17_043438) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["approvalable_type", "approvalable_id"], name: "index_approvals_on_approvalable_type_and_approvalable_id"
     t.index ["user_id"], name: "index_approvals_on_user_id"
+  end
+
+  create_table "cancels", force: :cascade do |t|
+    t.boolean "cancel", default: false, null: false
+    t.bigint "supply_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["supply_id"], name: "index_cancels_on_supply_id"
   end
 
   create_table "categories", force: :cascade do |t|

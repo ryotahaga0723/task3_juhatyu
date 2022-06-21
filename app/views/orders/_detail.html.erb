@@ -2,12 +2,10 @@
     <tr>
       <td><%= s.code %></td>
       <td>
-        <%= link_to ajax_orders_path(s.id), remote: true do %>
-          <%= s.name %>
-        <% end %>
+        <%= link_to s.name, ajax_orders_path(s.id) %>
       </td>
       <td><%= s.price %></td>
       <td><%= s.set %></td>
-      <td><%= s.order_supplies.average(:quantity).round(1) %></td>
+      <td><%= s.avarage %></td>
     </tr>
   <% end %>

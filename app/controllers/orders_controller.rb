@@ -44,10 +44,10 @@ class OrdersController < ApplicationController
     @order.build_telephone
     @order.build_shipping
     @order.build_status
-    Supply.all.each do |supply|
+    @supply = Supply.left_outer_joins(:cancel).where(cancels: {cancel: false})
+    @supply.each do |supply|
       @order.order_supplies.build(supply_id: supply.id)
     end
-    @supply = Supply.all
   end
 
   # GET /orders/1/edit
@@ -65,6 +65,7 @@ class OrdersController < ApplicationController
 
   def back
 		@order = Order.new(order_params)
+    @supply = Supply.all
 		render :new
 	end
 
@@ -133,9 +134,11 @@ class OrdersController < ApplicationController
 
   def ajax
     @order = Order.find(params[:format])
-    respond_to ajax.js
+    respond_to do |format|
+      format.html{render :ajax}
+      format.js{render :ajax}
+    end
   end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.

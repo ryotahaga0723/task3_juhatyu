@@ -101,6 +101,10 @@ Supply.create!(
   product_id: 1,
   stock_id: 1,
 )
+Cancel.create!(
+  supply_id: 1
+)
+
 Product.create!(
   name: 'ブドウ', 
   company_id: 100,
@@ -120,6 +124,11 @@ Supply.create!(
   product_id: 2,
   stock_id: 2,
 )
+
+Cancel.create!(
+  supply_id: 2
+)
+
 Supply.create!(
   code: '100139',
   name: "リンゴ",
@@ -128,6 +137,9 @@ Supply.create!(
   content: "青森県産のトキ",
   product_id: 1,
   stock_id: 1,
+)
+Cancel.create!(
+  supply_id: 3
 )
 
 

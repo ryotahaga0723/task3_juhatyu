@@ -3,7 +3,8 @@ class SuppliesController < ApplicationController
 
   # GET /supplies or /supplies.json
   def index
-    @supplies = Supply.all
+    @supplies = Supply.left_outer_joins(:cancel).where(cancels: {cancel: false})
+    @supplies_cancel = Supply.left_outer_joins(:cancel).where(cancels: {cancel: true})
   end
 
   # GET /supplies/1 or /supplies/1.json
@@ -37,6 +38,11 @@ class SuppliesController < ApplicationController
 
     respond_to do |format|
       if @supply.save
+
+        Cancel.create!(
+          supply_id: @supply.id
+        )
+
         format.html { redirect_to supplies_url, notice: "販売商品を登録しました" }
         format.json { render :show, status: :created, location: @supply }
       else

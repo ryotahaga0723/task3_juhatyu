@@ -56,5 +56,12 @@ Rails.application.routes.draw do
       post :update_order
     end
   end
+
+  resources :cancels do
+    member do
+      post :update_noncancel
+      post :update_cancel
+    end
+  end
   
 end

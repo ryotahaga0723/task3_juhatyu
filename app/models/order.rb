@@ -22,6 +22,5 @@ class Order < ApplicationRecord
   validates_associated :address
   validates_associated :telephone
   validates_associated :shipping
-  validates_associated :status
-
+  validates_associated :status  
 end

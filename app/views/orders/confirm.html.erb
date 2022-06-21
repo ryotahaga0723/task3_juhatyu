@@ -6,6 +6,7 @@
 
     <table class="osare3-table col4t show">
       <thead>
+        <th></th>
         <th>商品コード</th>
         <th>商品名</th>
         <th>単価</th>
@@ -17,6 +18,15 @@
       <tbody>
         <% @order.order_supplies.each do |o| %>
           <tr>
+            <td>
+              <% unless o.quantity.nil? %>
+                <% if (o.supply.avarage / 10) > o.quantity || (o.supply.avarage * 10) < o.quantity %>
+                  桁違いの可能性あり
+                <% elsif o.quantity.to_s.split("").uniq.size == 1 && o.quantity > 100 %>
+                  連打の可能性あり
+                <% end %>
+              <% end %>
+            </td>
             <td><%= o.supply.code %></td>
             <td><%= o.supply.name %></td>
             <td>￥<%= o.supply.price %></td>

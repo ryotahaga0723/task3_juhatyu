@@ -36,6 +36,10 @@ class ProductsController < ApplicationController
           product_id: @product.id,
           stock_id: @product.stock.id
         )
+
+        Cancel.create!(
+          supply_id: @supply.id
+        )
     
         format.html { redirect_to products_url, notice: "在庫を登録しました" }
         format.json { render :show, status: :created, location: @product }
