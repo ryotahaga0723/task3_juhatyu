@@ -3,8 +3,8 @@ class SuppliesController < ApplicationController
 
   # GET /supplies or /supplies.json
   def index
-    @supplies = Supply.left_outer_joins(:cancel).where(cancels: {cancel: false})
-    @supplies_cancel = Supply.left_outer_joins(:cancel).where(cancels: {cancel: true})
+    @supplies = Supply.left_outer_joins(:cancel).where(cancels: {cancel: false}).order(code: :ASC)
+    @supplies_cancel = Supply.left_outer_joins(:cancel).where(cancels: {cancel: true}).order(code: :ASC)
   end
 
   # GET /supplies/1 or /supplies/1.json

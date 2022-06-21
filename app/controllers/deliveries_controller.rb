@@ -32,6 +32,8 @@ class DeliveriesController < ApplicationController
         end
       end
 
+      UserMailer.with(to: @order.user.email, name: @order.user.name, order: @order, delivery: @delivery).delivery.deliver_now
+
       redirect_to index_receive_orders_path(current_user.id)
     else
         @order = Order.find(@delivery.order_id)

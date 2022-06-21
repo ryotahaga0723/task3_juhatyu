@@ -64,6 +64,10 @@ class InvoicesController < ApplicationController
         status: 4
       )
 
+      User.left_outer_joins(:company).where(companies: {code: 100}).where(admin: true).each do |user|
+        UserMailer.with(to: user.email, name: user.name, order: @status.order).invoice_approval.deliver_now
+      end  
+
       redirect_to index_receive_orders_path(current_user.id)
 
     else

@@ -37,7 +37,7 @@
           </td>
         </tr>
 
-        <% if current_user.admin == true %>
+        <% if current_user.admin == true && @company.payee.present? %>
           <tr>
             <td><strong>口座情報</strong></td>
           </tr>
@@ -70,7 +70,7 @@
       <tbody>
     </table>
 
-    <% if current_user.company.code == 100 && current_user.admin == true %>
+    <% if current_user.company.code == 100 && current_user.admin == true  && @company.payee.present? %>
       <%= link_to '口座編集', edit_payee_path(@company.payee) %>
     <% end %>
 
