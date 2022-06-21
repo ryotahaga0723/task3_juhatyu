@@ -1,5 +1,4 @@
 class OrdersController < ApplicationController
-  before_action :set_order, only: %i[ show edit update destroy ]
 
   # GET /orders or /orders.json
   #発注業者側
@@ -9,7 +8,7 @@ class OrdersController < ApplicationController
     @orders = Order.left_outer_joins(:approval, :user).where(created_at: @month.all_month).where(approvals: {approval: 0}).where(users: {company_id: current_user.company.id})
     @orders_approval = Order.left_outer_joins(:approval, :user).where(created_at: @month.all_month).where(approvals: {approval: 1}).where(users: {company_id: current_user.company.id})
     @orders_receive = Order.left_outer_joins(:status, :user).where(created_at: @month.all_month).where.not(statuses: {status: "新規受付"}).where.not(statuses: {status: "受注不可"}).where(users: {company_id: current_user.company.id})
-    @supplies = Supply.left_outer_joins(order_supplies: [order: :user]).where(users: {company_id: current_user.company.id}).group(:name).order('count(name) desc')
+    @supplies = Supply.where(id: OrderSupply.left_outer_joins(order: :user).where(users: {company_id: current_user.company.id}).group(:order_id).order('sum(quantity) desc').pluck(:order_id))
   end
 
   def index_supply
@@ -35,6 +34,7 @@ class OrdersController < ApplicationController
 
   # GET /orders/1 or /orders/1.json
   def show
+    @order = Order.find(params[:id])
   end
 
   # GET /orders/new
@@ -44,12 +44,29 @@ class OrdersController < ApplicationController
     @order.build_telephone
     @order.build_shipping
     @order.build_status
-    Supply.count.times{@order.order_supplies.build}
+    Supply.all.each do |supply|
+      @order.order_supplies.build(supply_id: supply.id)
+    end
+    @supply = Supply.all
   end
 
   # GET /orders/1/edit
   def edit
+    @order = Order.find(params[:id])
   end
+
+  def confirm
+    @order = Order.new(order_params)
+
+    if @order.invalid? #入力項目に空のものがあれば入力画面に遷移
+      render :new
+    end
+  end
+
+  def back
+		@order = Order.new(order_params)
+		render :new
+	end
 
   # POST /orders or /orders.json
   def create
@@ -62,7 +79,7 @@ class OrdersController < ApplicationController
           @total_price += totalsub  
         end
       else
-        f.destroy
+        f.quantity = 0
       end
     end
 
@@ -84,6 +101,7 @@ class OrdersController < ApplicationController
 
   # PATCH/PUT /orders/1 or /orders/1.json
   def update
+    @order = Order.find(params[:id])
     @total_price = 0
     @order.order_supplies.each do |f|
       totalsub = f.supply.price * f.quantity
@@ -105,12 +123,19 @@ class OrdersController < ApplicationController
 
   # DELETE /orders/1 or /orders/1.json
   def destroy
+    @order = Order.find(params[:id])
     @order.destroy
     respond_to do |format|
       format.html { redirect_to orders_url, notice: "注文内容を削除しました" }
       format.json { head :no_content }
     end
   end
+
+  def ajax
+    @order = Order.find(params[:format])
+    respond_to ajax.js
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

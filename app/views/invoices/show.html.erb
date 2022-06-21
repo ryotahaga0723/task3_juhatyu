@@ -72,8 +72,11 @@
       </div>
     </div>
 
+    <% if current_user.company.code == 100 %>
     <%= link_to '編集', edit_invoice_path(@invoice) %> |
+    <% end %>
     <%= link_to '戻る', invoices_path %>
+
 
   </div>
 </section>

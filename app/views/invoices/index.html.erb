@@ -18,8 +18,10 @@
           <tr>
             <td><%= invoice.code %></td>
             <td><%= link_to '詳細', invoice %></td>
-            <td><%= link_to '編集', edit_invoice_path(invoice, format: invoice.order) %></td>
-            <td><%= link_to '削除', invoice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% if current_user.company.code == 100 && current_user.admin == true %>
+              <td><%= link_to '編集', edit_invoice_path(invoice, format: invoice.order) %></td>
+              <td><%= link_to '削除', invoice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

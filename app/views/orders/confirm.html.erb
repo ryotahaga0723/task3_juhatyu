@@ -1,0 +1,252 @@
+<section class="section">
+  <div class="section_inner">
+    <div class= "title">
+      <h1>注文内容確認</h1>
+    </div>
+
+    <table class="osare3-table col4t show">
+      <thead>
+        <th>商品コード</th>
+        <th>商品名</th>
+        <th>単価</th>
+        <th>セット数</th>
+        <th>個数</th>
+        <th>合計個数</th>
+      </thead>
+
+      <tbody>
+        <% @order.order_supplies.each do |o| %>
+          <tr>
+            <td><%= o.supply.code %></td>
+            <td><%= o.supply.name %></td>
+            <td>￥<%= o.supply.price %></td>
+            <td><%= o.supply.set %>セット</td>
+            <% if o.availability == true %>
+              <td><%= o.quantity %>個</td>
+              <% unless o.quantity.nil? %>
+                <td><%= o.quantity * o.supply.set %>個</td>
+              <% end %>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+
+    <table class="osare3-table col4t show">
+      <tbody>
+
+        <tr>
+          <td>到着希望日</td>
+          <td><%= @order.date.strftime("%Y年%m月%d日") %></td>
+        </tr>
+
+        <tr>
+          <td>名前</td>
+          <td><%= @order.shipping.name %></td>
+        </tr>
+
+        <tr>
+          <td>郵便番号</td>
+          <td><%= @order.address.postcode %></td>
+        </tr>
+
+        
+        <tr>
+          <td>住所</td>
+          <td>
+            <%= @order.address.prefecture %>
+            <%= @order.address.city %>
+            <%= @order.address.town %>
+            <%= @order.address.address %>
+            <%= @order.address.building %>
+            <%= @order.address.room_number %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>電話番号</td>
+          <td><%= @order.telephone.number %></td>
+        </tr>
+
+      <tbody>
+    </table>
+    
+
+    <%= form_with(model: @order, local: true) do |form| %>
+
+    <div id="supply_forms">
+      <%= form.fields_for :order_supplies do |supply| %>
+        <%= supply.hidden_field :supply_id %>
+        <%= supply.hidden_field :quantity %>
+        <%= supply.hidden_field :availability %>
+      <% end %>
+    </div>
+
+    <% Order.order(created_at: :desc).limit(1).each do |f| %>
+      <% if f.code.present? %>
+        <% @order_code = f.code.to_i + 1 %>
+      <% else %>
+        <% @order_code = "1000001" %>
+      <% end %>
+    <% end %>
+
+    <div class="field">
+      <%= form.hidden_field :code, value: @order_code %>
+    </div>
+
+    <%= form.fields_for :status do |form| %>
+      <%= form.hidden_field :status %>
+    <% end %>
+
+    <div class="field">
+      <%= form.hidden_field :date %>
+    </div>
+
+    <div id="name_forms">
+      <%= form.fields_for :shipping do |form| %>
+        <div class="field">
+          <%= form.hidden_field :name %>
+        </div>
+      <% end %>
+    </div>
+
+    <div id="address_forms">
+      <%= form.fields_for :address do |form| %>
+        <div class="field">
+          <%= form.hidden_field :postcode %>
+        </div>
+
+        <div class="field">
+          <%= form.hidden_field :prefecture %>      
+        </div>
+
+        <div class="field">
+          <%= form.hidden_field :city %>
+        </div>
+
+        <div class="field">
+          <%= form.hidden_field :town %>
+        </div>
+
+        <div class="field">
+          <%= form.hidden_field :address %>
+        </div>
+
+        <div class="field">
+          <%= form.hidden_field :building %>
+        </div>
+
+        <div class="field">
+          <%= form.hidden_field :room_number %>
+        </div>
+      <% end %>
+    </div>
+
+    <div id="telephone_forms">
+      <%= form.fields_for :telephone do |form| %>
+        <div class="field">
+          <%= form.hidden_field :number %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="field">
+      <%= form.hidden_field :user_id, value: current_user.id %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  <% end %>
+
+  <%= form_with(model: @order, url: back_orders_path, local: true) do |form| %>
+
+    <div id="supply_forms">
+      <%= form.fields_for :order_supplies do |supply| %>
+        <%= supply.hidden_field :supply_id %>
+        <%= supply.hidden_field :quantity %>
+        <%= supply.hidden_field :availability %>
+      <% end %>
+    </div>
+
+    <% Order.order(created_at: :desc).limit(1).each do |f| %>
+      <% if f.code.present? %>
+        <% @order_code = f.code.to_i + 1 %>
+      <% else %>
+        <% @order_code = "1000001" %>
+      <% end %>
+    <% end %>
+
+    <div class="field">
+      <%= form.hidden_field :code, value: @order_code %>
+    </div>
+
+    <%= form.fields_for :status do |form| %>
+      <%= form.hidden_field :status %>
+    <% end %>
+
+    <div class="field">
+      <%= form.hidden_field :date %>
+    </div>
+
+    <div id="name_forms">
+      <%= form.fields_for :shipping do |form| %>
+        <div class="field">
+          <%= form.hidden_field :name %>
+        </div>
+      <% end %>
+    </div>
+
+    <div id="address_forms">
+      <%= form.fields_for :address do |form| %>
+        <div class="field">
+          <%= form.hidden_field :postcode %>
+        </div>
+
+        <div class="field">
+          <%= form.hidden_field :prefecture %>      
+        </div>
+
+        <div class="field">
+          <%= form.hidden_field :city %>
+        </div>
+
+        <div class="field">
+          <%= form.hidden_field :town %>
+        </div>
+
+        <div class="field">
+          <%= form.hidden_field :address %>
+        </div>
+
+        <div class="field">
+          <%= form.hidden_field :building %>
+        </div>
+
+        <div class="field">
+          <%= form.hidden_field :room_number %>
+        </div>
+      <% end %>
+    </div>
+
+    <div id="telephone_forms">
+      <%= form.fields_for :telephone do |form| %>
+        <div class="field">
+          <%= form.hidden_field :number %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="field">
+      <%= form.hidden_field :user_id, value: current_user.id %>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "入力画面に戻る" %>
+    </div>
+  <% end %>
+
+
+  </div>
+</section>

@@ -8,6 +8,10 @@ class SuppliesController < ApplicationController
 
   # GET /supplies/1 or /supplies/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /supplies/new

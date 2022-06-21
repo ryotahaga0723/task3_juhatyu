@@ -1,6 +1,6 @@
 <div class="nested-fields">
     <%= supply.collection_select :supply_id, supply.object.selectable_supplies, :id, :name %>
-    <%= supply.number_field :quantity %></td>
+    <%= supply.number_field :quantity %>
     <%= supply.check_box :availability, :as => :boolean %>
 
   <div class="field">

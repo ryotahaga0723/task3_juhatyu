@@ -9,6 +9,16 @@ class InvoicesController < ApplicationController
   # GET /invoices/1 or /invoices/1.json
   def show
     @company = Company.find(100)
+
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "請求書", 
+               layout: 'pdf_layouts.html',
+               template: "invoices/:id",
+               encoding: 'UTF-8'
+      end
+    end
   end
 
   # GET /invoices/new

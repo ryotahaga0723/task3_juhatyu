@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'products#index'
+  get 'things/show', to: 'things#show'
 
   resources :sessions, only: [:new, :create, :destroy]
   resources :users, only: [:index, :new, :create, :show, :edit, :update]
@@ -16,6 +17,9 @@ Rails.application.routes.draw do
       get :index_receive
       get :index_supply
       get :index_receive_month
+      post :confirm
+      post :back
+      get :ajax
     end
   end
 

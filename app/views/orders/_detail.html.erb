@@ -1,0 +1,13 @@
+<% supply.map do |s| %>
+    <tr>
+      <td><%= s.code %></td>
+      <td>
+        <%= link_to ajax_orders_path(s.id), remote: true do %>
+          <%= s.name %>
+        <% end %>
+      </td>
+      <td><%= s.price %></td>
+      <td><%= s.set %></td>
+      <td><%= s.order_supplies.average(:quantity).round(1) %></td>
+    </tr>
+  <% end %>

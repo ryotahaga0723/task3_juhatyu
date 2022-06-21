@@ -210,6 +210,17 @@ Address.create!(
   addressable_type: 'Order',
   addressable_id: 2,
 )
+Address.create!(
+  postcode: 1000001,
+  prefecture: '東京都',
+  city: '千代田区',
+  town: '一ツ橋',
+  address: '1-1-1', 
+  building: 'サンパレスサイドビル',
+  room_number: '5階',
+  addressable_type: 'Order',
+  addressable_id: 3,
+)
 
 Approval.create!(
   approval: 0,
