@@ -1,0 +1,51 @@
+<section class="section">
+  <div class ="section_inner">
+
+    <h1>発送予定一覧 <%= @day.strftime("%m/%d") %></h1>
+
+    <p id="notice"><%= notice %></p>
+
+    <%= link_to "前日", index_receive_delivery_orders_path(day: @day.prev_day) %>
+    <%= link_to "翌日", index_receive_delivery_orders_path(day: @day.next_day) %>
+    <%= link_to "受注日ごと", index_receive_orders_path %>
+    <%= link_to "受注月ごと", index_receive_month_orders_path %>
+    <%= link_to "to do list", index_day_schedules_path %>
+
+    <table class="osare3-table col4t">
+      <thead>
+        <tr>
+          <th>名前</th>
+          <th>郵便番号</th>
+          <th>住所</th>
+          <th>商品数</th>
+          <th>希望到着日</th>
+          <th>詳細</th>
+          <th>編集</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td><%= order.shipping.name %></td>
+            <td><%= order.address.postcode %></td>
+            <td>
+              <%= order.address.prefecture %>
+              <%= order.address.city %>
+              <%= order.address.town %>
+              <%= order.address.address %>
+              <%= order.address.building %>
+              <%= order.address.room_number %>
+            </td>
+            <td><%= order.order_supplies.count %>点</td>
+            <td><%= order.date.strftime("%Y年%m月%d日") %></td>
+            <td><%= link_to '詳細', order %></td>
+            <td><%= link_to '編集', edit_order_path(order) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  
+  </div>
+</section>

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       get :index_receive
       get :index_supply
       get :index_receive_month
+      get :index_receive_delivery
       post :confirm
       post :back
       get :ajax

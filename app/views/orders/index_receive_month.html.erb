@@ -5,9 +5,36 @@
 
     <p id="notice"><%= notice %></p>
 
+    <table class="osare3-table col4t">
+      <thead>
+        <tr>
+          <th>新規受付</th>
+          <th>発送待ち</th>
+          <th>発送中</th>
+          <th>請求書作成待ち</th>
+          <th>請求書承認待ち</th>
+          <th>取引完了</th>
+          <th>受注不可</th>
+        </tr>
+      </thead>
+  
+      <tbody>
+        <tr>
+          <td><%= @orders_0 %></td>
+          <td><%= @orders_1 %></td>
+          <td><%= @orders_2 %></td>
+          <td><%= @orders_3 %></td>
+          <td><%= @orders_4 %></td>
+          <td><%= @orders_5 %></td>
+          <td><%= @orders_6 %></td>
+        </tr>
+      </tbody>
+    </table>
+
     <%= link_to "前日", index_receive_month_orders_path(month: @month.prev_month) %>
     <%= link_to "翌日", index_receive_month_orders_path(month: @month.next_month) %>
     <%= link_to "受注日ごと", index_receive_orders_path %>
+    <%= link_to "発送日ごと", index_receive_delivery_orders_path %>
     <%= link_to "to do list", index_day_schedules_path %>
 
     <table class="osare3-table col4t">

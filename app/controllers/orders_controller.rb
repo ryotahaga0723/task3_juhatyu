@@ -22,14 +22,35 @@ class OrdersController < ApplicationController
   ##受注日ごと
   def index_receive
     @day = params[:day] ? Date.parse(params[:day]) : Time.zone.today
-    @orders = Order.left_outer_joins(:approval).where(created_at: @day.all_day).where(approvals: {approval: 1})
+    @orders = Order.left_outer_joins(:approval, :status).where(created_at: @day.all_day).where(approvals: {approval: 1})
+    @orders_0 = @orders.where(statuses: {status: 0}).count
+    @orders_1 = @orders.where(statuses: {status: 1}).count
+    @orders_2 = @orders.where(statuses: {status: 2}).count
+    @orders_3 = @orders.where(statuses: {status: 3}).count
+    @orders_4 = @orders.where(statuses: {status: 4}).count
+    @orders_5 = @orders.where(statuses: {status: 5}).count
+    @orders_6 = @orders.where(statuses: {status: 6}).count
   end
 
   #受注月ごと
   def index_receive_month
     @month = params[:month] ? Date.parse(params[:month]) : Time.zone.today
-    @orders = Order.left_outer_joins(:approval).where(created_at: @month.all_month).where(approvals: {approval: 1})
+    @orders = Order.left_outer_joins(:approval, :status).where(created_at: @month.all_month).where(approvals: {approval: 1})
+    @orders_0 = @orders.where(statuses: {status: 0}).count
+    @orders_1 = @orders.where(statuses: {status: 1}).count
+    @orders_2 = @orders.where(statuses: {status: 2}).count
+    @orders_3 = @orders.where(statuses: {status: 3}).count
+    @orders_4 = @orders.where(statuses: {status: 4}).count
+    @orders_5 = @orders.where(statuses: {status: 5}).count
+    @orders_6 = @orders.where(statuses: {status: 6}).count
   end
+
+  #発送日ごと
+  def index_receive_delivery
+    @day = params[:day] ? Date.parse(params[:day]) : Time.zone.today
+    @orders = Order.left_outer_joins(:approval).where(date: (@day +1).all_day).where(approvals: {approval: 1})
+  end
+
 
 
   # GET /orders/1 or /orders/1.json
