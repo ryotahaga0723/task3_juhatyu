@@ -59,3 +59,4 @@ gem 'cocoon'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'letter_opener_web'
+gem 'aws-sdk-s3', require: false
