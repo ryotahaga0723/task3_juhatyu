@@ -154,10 +154,9 @@ class OrdersController < ApplicationController
   end
 
   def ajax
-    @order = Order.find(params[:format])
+    @supply = Supply.find(params[:supply])
     respond_to do |format|
-      format.html{render :ajax}
-      format.js{render :ajax}
+      format.js{render :ajax} 
     end
   end
 

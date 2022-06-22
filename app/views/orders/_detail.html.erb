@@ -1,11 +1,29 @@
 <% supply.map do |s| %>
     <tr>
       <td><%= s.code %></td>
-      <td>
-        <%= link_to s.name, ajax_orders_path(s.id) %>
+      <td id=<%= s.id %>>
+        <div class="supply-detail">
+          <%= s.name %>
+        </div>
       </td>
       <td><%= s.price %></td>
       <td><%= s.set %></td>
       <td><%= s.avarage %></td>
     </tr>
   <% end %>
+ 
+  <script>
+  <% supply.map do |s| %>
+  document.getElementById("<%= s.id %>").addEventListener('click', function() {
+    var supply = document.getElementById("<%= s.id %>").id;
+
+    $.ajax({
+      url: "/orders/ajax",
+      type: "GET",
+      data: {
+        supply: supply
+      }
+    })
+  })
+  <% end %>
+</script>
