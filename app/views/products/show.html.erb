@@ -9,6 +9,12 @@
       <%= content_tag(:div, value, class: "#{key}") %>
     <% end %>   
 
+    <% if @product.image.attached? %>
+      <div class="image">
+        <%= image_tag @product.image, width: "50%" %>
+      </div>
+    <% end %>
+
     <table class="osare3-table col4t show">
       <tbody>
 
@@ -25,16 +31,7 @@
         <tr>
           <td>在庫数</td>
           <% @order_done = 0 %>
-          <% @product.supplies.each do |supply| %>
-            <% supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 2}).distinct
-            .or(supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 3}).distinct)
-            .or(supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 4}).distinct)
-            .or(supply.order_supplies.left_outer_joins(order: :status).where(statuses: {status: 5}).distinct).each do |o| %>
-              <% @order_done += o.quantity * o.supply.set  %>
-            <% end %>
-          <% end %>
-  
-          <td><%= @product.stock.quantity - @order_done %></td>
+          <td><%= @product.stock.quantity %></td>
           </tr>
 
       <tbody>

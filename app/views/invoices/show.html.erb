@@ -6,34 +6,43 @@
         <h1>請求書</h1>
       </div>
 
-      <div class="invoice-header">
-        <div class="demander">
-          <%= @invoice.order.user.company.name %>御中<br>
-          ご担当者：<%= @invoice.order.user.name %>様<br>
-        </div>
+      <div class="box">
+        <% if @company.image.attached? %>
+          <div class="company-image">
+            <%= image_tag @company.image, width: "15%" %>
+          </div>
+        <% end %>
 
-        <div class="invoice-right">
-          <div class="invoice-data">
-            請求書 No.<%= @invoice.code %><br>
-            請求日 <%= @invoice.created_at.strftime("%Y年%m月%d日") %><br>
+        <div class="invoice-header">
+          <div class="demander">
+            <%= @invoice.order.user.company.name %>御中<br>
+            ご担当者：<%= @invoice.order.user.name %>様<br>
           </div>
 
-          <div class="supplyer">
-            <%= @company.name %><br>
-            〒<%= @company.address.postcode %><br>
-            住所：
-              <%= @company.address.prefecture %>
-              <%= @company.address.city %>
-              <%= @company.address.town %>
-              <%= @company.address.address %><br>
-              <%= @company.address.building %>
-              <%= @company.address.room_number %><br>
-            担当者：<%= @invoice.user.name %><br>
-            TEL：<%= @company.telephone.number %><br>
-            Mail：<%= @invoice.user.email %>
+          <div class="invoice-right">
+            <div class="invoice-data">
+              請求書 No.<%= @invoice.code %><br>
+              請求日 <%= @invoice.created_at.strftime("%Y年%m月%d日") %><br>
+            </div>
+
+            <div class="supplyer">
+              <%= @company.name %><br>
+              〒<%= @company.address.postcode %><br>
+              住所：
+                <%= @company.address.prefecture %>
+                <%= @company.address.city %>
+                <%= @company.address.town %>
+                <%= @company.address.address %><br>
+                <%= @company.address.building %>
+                <%= @company.address.room_number %><br>
+              担当者：<%= @invoice.user.name %><br>
+              TEL：<%= @company.telephone.number %><br>
+              Mail：<%= @invoice.user.email %>
+            </div>
           </div>
         </div>
       </div>
+
 
       <div class="total_sum">
         合計金額　　　￥<%= @invoice.total_sum %>

@@ -68,20 +68,15 @@
     <% end %>
   </div>
 
+  <% if current_user.admin == true %>
+    <div class="field">
+      <%= form.label :角印 %>
+      <%= form.file_field :image %>
+    </div>
+  ※お得意先登録の場合入力不要
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => { 
-$("#company_address_attributes_postal_code").jpostal({
-  postcode : [ "#company_address_attributes_postal_code" ],
-  address  : {"#company_address_attributes_prefecture_code": "%3",
-              "#company_address_attributes_city": "%4",
-              "#company_address_attributes_town": "%5%6%7"
-                  }
-})
-})
-</script>

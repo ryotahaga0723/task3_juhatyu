@@ -26,11 +26,13 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
     respond_to do |format|
       if @product.save
-          code = Supply.all.count + 1
+
+        code = Supply.all.count + 1
+
         @supply = Supply.create!(
           code: @product.company.code.to_s + @product.category.id.to_s + code.to_s + "9",
           name: @product.name,
-          price: 100,
+          price: 0,
           set: 1,
           content: @product.content,
           product_id: @product.id,
@@ -38,6 +40,7 @@ class ProductsController < ApplicationController
         )
 
         Cancel.create!(
+          cancel: true,
           supply_id: @supply.id
         )
     
@@ -81,6 +84,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:name, :content, :company_id, :category_id, stock_attributes: [:id, :quantity, :company_id, :user_id])
+      params.require(:product).permit(:name, :content, :image, :company_id, :category_id, stock_attributes: [:id, :quantity, :company_id, :user_id])
     end
 end

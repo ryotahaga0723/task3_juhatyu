@@ -9,6 +9,7 @@ class Company < ApplicationRecord
   has_many :categories, dependent: :destroy
   has_many :stocks, dependent: :destroy
   has_one :payee, dependent: :destroy
+  has_one_attached :image
 
   accepts_nested_attributes_for :address
   accepts_nested_attributes_for :telephone

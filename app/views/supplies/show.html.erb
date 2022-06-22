@@ -9,6 +9,13 @@
       <%= content_tag(:div, value, class: "#{key}") %>
     <% end %>
 
+    <% if @supply.product.image.attached? %>
+      <div class="image">
+        <%= image_tag @supply.product.image, width: "50%" %>
+      </div>
+    <% end %>
+
+
     <table class="osare3-table col4t show">
       <tbody>
 

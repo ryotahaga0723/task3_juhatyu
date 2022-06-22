@@ -27,6 +27,11 @@
     <%= form.text_area :content %>
   </div>
 
+  <div class="field">
+    <%= form.label :商品画像 %>
+    <%= form.file_field :image %>
+  </div>
+
   <div id="stock_forms">
     <%= form.fields_for :stock do |form| %>
       <div class="field">

@@ -18,7 +18,9 @@
 
 .invoice-header{
     display: flex;
-    justify-content: space-between;
+    position: absolute;
+    top: 0px;
+    z-index: 2 
 }
 
 .supplyer{
@@ -50,4 +52,17 @@ table{
     padding-top: 20px;
     border-bottom: 1px solid black;
     width: 180px;
+}
+
+.company-image{
+  text-align: right;
+}
+
+.box{
+    position: relative;
+    height: 200px;
+  }
+
+.invoice-right{
+    padding-left: 130px;
 }
