@@ -17,7 +17,7 @@ a {
   color: #000; }
 
 a:visited {
-  color: #666; }
+  color: #000; }
 
 a:hover {
   color: #fff;
@@ -38,12 +38,11 @@ div.actions {
 
 .field_with_errors {
   padding: 2px;
-  background-color: red;
+  background-color: rgb(245, 183, 113);
   display: table; }
 
 #error_explanation {
-  width: 450px;
-  border: 2px solid red;
+  border: 2px solid rgb(245, 183, 113);
   padding: 7px 7px 0;
   margin-bottom: 20px;
   background-color: #f0f0f0; }
@@ -54,12 +53,12 @@ div.actions {
   padding: 5px 5px 5px 15px;
   font-size: 12px;
   margin: -7px -7px 0;
-  background-color: #c00;
+  background-color: rgb(245, 183, 113);
   color: #fff; }
 
 #error_explanation ul li {
   font-size: 12px;
-  list-style: square; }
+   }
 
 label {
   display: block; }

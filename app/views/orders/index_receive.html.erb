@@ -57,7 +57,7 @@
           <tr>
             <td><%= order.user.company.name %></td>
             <td><%= order.created_at.strftime("%Y年%m月%d日") %></td>
-            <td><%= order.order_supplies.count %>点</td>
+            <td><%= order.order_supplies.where.not(quantity: 0).count %>点</td>
             <td><%= order.total_price %>円</td>
             <td><%= order.date.strftime("%Y年%m月%d日") %></td>
             <td><%= link_to '詳細', order %></td>

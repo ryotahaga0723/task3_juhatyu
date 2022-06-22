@@ -21,7 +21,7 @@
         <tr>
           <td>￥<%= @orders_receive.sum(:total_price).floor %></td>
           <td><%= @orders_receive.count %>回</td>
-          <% @supplies.each do |s| %>
+          <% @supplies.limit(3).each do |s| %>
             <td><%= s.name %>/<%= s.set %>セット</td>
             <% end %>
         </tr>

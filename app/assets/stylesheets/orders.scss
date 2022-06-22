@@ -26,7 +26,7 @@
   
   #modal {
     position: fixed;   /* スクロールで移動しないようmodalの位置を固定します */
-    top: 10vh;
+    top: 10px;
     /* 以下3行：モーダルを左右中央揃えにする方法 */
     left: 0;
     right: 0;
@@ -34,7 +34,7 @@
     transform: translate(0, 0) scale(1);
     transition: 0.2s;   /* transitionでアニメーションを作成 */
     z-index: 2;   /* マスクより上に重なるようにする */
-    width: 935px;   /* showビューの幅に合わせて設定 */
+    width: 50%;   /* showビューの幅に合わせて設定 */
   }
   
   /* hiddenクラスで最初は表示されないようにする */

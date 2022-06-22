@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
     @orders = Order.left_outer_joins(:approval, :user).where(created_at: @month.all_month).where(approvals: {approval: 0}).where(users: {company_id: current_user.company.id})
     @orders_approval = Order.left_outer_joins(:approval, :user).where(created_at: @month.all_month).where(approvals: {approval: 1}).where(users: {company_id: current_user.company.id})
     @orders_receive = Order.left_outer_joins(:status, :user).where(created_at: @month.all_month).where.not(statuses: {status: "新規受付"}).where.not(statuses: {status: "受注不可"}).where(users: {company_id: current_user.company.id})
-    @supplies = Supply.where(id: OrderSupply.left_outer_joins(order: :user).where(users: {company_id: current_user.company.id}).group(:order_id).order('sum(quantity) desc').pluck(:order_id))
+    @supplies = Supply.where(id: OrderSupply.left_outer_joins(order: :user).where(users: {company_id: current_user.company.id}).group(:order_id).order('sum(order_id) desc').pluck(:order_id))
   end
 
   def index_supply
@@ -80,6 +80,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     if @order.invalid? #入力項目に空のものがあれば入力画面に遷移
+      @supply = Supply.all
       render :new
     end
   end
@@ -117,6 +118,7 @@ class OrdersController < ApplicationController
 
       redirect_to order_url(@order), notice: "注文内容を作成しました"
     else
+      @supply = Supply.all
       render :new, status: :unprocessable_entity
     end
   end
