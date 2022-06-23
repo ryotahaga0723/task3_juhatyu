@@ -80,7 +80,7 @@
             
               <% elsif order.status.status == "請求書作成待ち" %>
                 <td><%= order.status.status %></td>
-                <td><%= link_to '請求書作成',  new_invoice_path(order) %></td>
+                <td><%= link_to '請求書作成',  new_order_invoice_path(order) %></td>
               
               <% elsif order.status.status == "請求書承認待ち" %>
                 <td><%= order.status.status %></td>
