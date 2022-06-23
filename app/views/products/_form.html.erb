@@ -11,44 +11,60 @@
     </div>
   <% end %>
 
-  <div class="field">
-  <%= form.label :カテゴリー %>
-  <%= form.select :category_id, current_user.company.categories.collect { |c| [c.name, c.id]}, { include_blank: '選択してください'}, { class: 'form-control' , required: true} %>
-  </div>
+  <table>
+    <tbody>
 
-
-  <div class="field">
-    <%= form.label :商品名 %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :説明 %>
-    <%= form.text_area :content %>
-  </div>
-
-  <div class="field">
-    <%= form.label :商品画像 %>
-    <%= form.file_field :image %>
-  </div>
-
-  <div id="stock_forms">
-    <%= form.fields_for :stock do |form| %>
       <div class="field">
-        <%= form.label :在庫数 %>
-        <%= form.number_field :quantity, min: 0 %>
+        <tr>
+          <td><%= form.label :カテゴリー %></td>
+          <td><%= form.select :category_id, current_user.company.categories.collect { |c| [c.name, c.id]}, { include_blank: '選択してください'}, { class: 'form-control' , required: true} %></td>
+        </tr>
       </div>
-      <%= form.hidden_field :company_id, value: current_user.company.code %>
-      <%= form.hidden_field :user_id, value: current_user.id %>
-      <% end %>
-  </div>
 
+      <div class="field">
+        <tr>
+          <td><%= form.label :商品名 %></td>
+          <td><%= form.text_field :name %></td>
+        </tr>
+      </div>
 
-  <div class="field">
-    <%= form.hidden_field :company_id, value: current_user.company.code %>
-  </div>
+      <div class="field">
+        <tr>
+          <td><%= form.label :説明 %></td>
+          <td><%= form.text_area :content %></td>
+        </tr>
+      </div>
+
+      <div class="field">
+        <tr>
+          <td><%= form.label :商品画像 %></td>
+          <td><%= form.file_field :image %></td>
+        </tr>
+      </div>
+
+      <div id="stock_forms">
+        <%= form.fields_for :stock do |form| %>
+
+          <div class="field">
+            <tr>
+              <td><%= form.label :在庫数 %></td>
+              <td><%= form.number_field :quantity, min: 0 %></td>
+            </tr>
+          </div>
+
+          <%= form.hidden_field :company_id, value: current_user.company.code %>
+          <%= form.hidden_field :user_id, value: current_user.id %>
+      
+        <% end %>
+      </div>
+    
+    </tbody>
+  </table>
+
+  <%= form.hidden_field :company_id, value: current_user.company.code %>
 
   <div class="actions">
     <%= form.submit %>
   </div>
+
 <% end %>

@@ -81,14 +81,14 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
 
     if @order.invalid? #入力項目に空のものがあれば入力画面に遷移
-      @supply = Supply.all
+      @supply = Supply.left_outer_joins(:cancel).where(cancels: {cancel: false})
       render :new
     end
   end
 
   def back
 		@order = Order.new(order_params)
-    @supply = Supply.all
+    @supply = Supply.left_outer_joins(:cancel).where(cancels: {cancel: false})
 		render :new
 	end
 
@@ -119,7 +119,7 @@ class OrdersController < ApplicationController
 
       redirect_to order_url(@order), notice: "注文内容を作成しました"
     else
-      @supply = Supply.all
+      @supply = Supply.left_outer_joins(:cancel).where(cancels: {cancel: false})
       render :new, status: :unprocessable_entity
     end
   end
@@ -140,7 +140,7 @@ class OrdersController < ApplicationController
         format.html { redirect_to order_url(@order), notice: "注文内容を更新しました" }
         format.json { render :show, status: :ok, location: @order }
       else
-        @supply = Supply.all
+        @supply = Supply.left_outer_joins(:cancel).where(cancels: {cancel: false})
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end

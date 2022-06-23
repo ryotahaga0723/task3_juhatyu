@@ -1,4 +1,13 @@
-$("#supply_code").val("<%= j(@product.company.code.to_s + @product.category.id.to_s+ (Supply.all.count + 1).to_s + "9") %>")
+if (<%= @supply %> + 1 < 10){
+  $("#supply_code").val("<%= j(@product.company.code.to_s + @product.category.id.to_s + "00" + (@supply + 1).to_s + "9") %>")
+
+}else if (<%= @supply %> + 1 >= 10 && <%= @supply %> + 1 < 100){
+  $("#supply_code").val("<%= j(@product.company.code.to_s + @product.category.id.to_s + "0" + (@supply + 1).to_s + "9") %>")
+
+}else{
+  $("#supply_code").val("<%= j(@product.company.code.to_s + @product.category.id.to_s + (@supply + 1).to_s + "9") %>")
+}
+    
 $("#supply_product_id").val("<%= j(@product.id) %>")
 $("#supply_stock_id").val("<%= j(@product.id) %>")
 $("#supply_name").val("<%= j(@product.name) %>")

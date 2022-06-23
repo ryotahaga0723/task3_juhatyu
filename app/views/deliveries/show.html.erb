@@ -30,8 +30,8 @@
       <tbody>
     </table>
     
-    <%= link_to '編集', edit_delivery_path(@delivery) %> |
     <% if current_user.company.code == 100 %>
+      <%= link_to '編集', edit_delivery_path(@delivery) %> |
       <%= link_to '戻る', index_receive_orders_path %>
     <% else %>
       <%= link_to '戻る', orders_path %>

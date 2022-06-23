@@ -1,30 +1,33 @@
 <div class="nested-fields">
-  <div class="field">
-    <%= content.label :商品コード %>
-    <%= content.text_field :code %>
-  </div>
 
-  <div class="field">
-    <%= content.label :商品名 %>
-    <%= content.text_field :name %>
-  </div>
+    <hr color="#f5b771">
 
-  <div class="field">
-    <%= content.label :セット数 %>
-    <%= content.number_field :set %>
-  </div>
+    <div class="field">
+      <%= content.label :商品コード %>
+      <%= content.text_field :code %>
+    </div>
 
-  <div class="field">
-    <%= content.label :単価 %>
-    <%= content.number_field :price %>
-  </div>
+    <div class="field">
+      <%= content.label :商品名 %>
+      <%= content.text_field :name %>
+    </div>
 
-  <div class="field">
-    <%= content.label :個数 %>
-    <%= content.number_field :quantity %>
-  </div>
+    <div class="field">
+      <%= content.label :セット数 %>
+      <%= content.number_field :set %>
+    </div>
 
-  <div class="field">
-    <%= link_to_remove_association "-商品入力フォーム削除", content %>
-  </div>
+    <div class="field">
+      <%= content.label :単価 %>
+      <%= content.number_field :price %>
+    </div>
+
+    <div class="field">
+      <%= content.label :個数 %>
+      <%= content.number_field :quantity %>
+    </div>
+
+    <div class="field">
+      <%= link_to_remove_association "-商品入力フォーム削除", content %>
+    </div>
 </div>

@@ -27,7 +27,15 @@ class ProductsController < ApplicationController
     respond_to do |format|
       if @product.save
 
-        code = Supply.all.count + 1
+        @supply = Supply.left_outer_joins(:product).where(products: {category_id: @product.category_id}).count
+
+        if @supply + 1 < 10
+          code = "00" + (@supply + 1).to_s
+        elsif @supply + 1 >= 10 && @supply + 1 < 100
+          code = "0" + (@supply + 1).to_s
+        else
+          code = (@supply + 1).to_s
+        end
 
         @supply = Supply.create!(
           code: @product.company.code.to_s + @product.category.id.to_s + code.to_s + "9",

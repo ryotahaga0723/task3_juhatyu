@@ -1,41 +1,56 @@
-<div class="field">
-  <%= form.label :商品名 %>
-  <select id= "form-name">
-    <option value="">--選択してください--</option>
-    <% Product.all.each do |f| %>
-      <option value=<%= f.id %>><%= f.name %></option>
-    <% end %>
-  </select>
-  <%= form.hidden_field :name %>
-</div>
+<table>
+  <tbody>
 
-<div class="field">
-  <%= form.label :商品コード %>
-  <%= form.text_field :code %>
-</div>
+    <div class="field">
+      <tr>
+        <td><%= form.label :商品名 %></td>
+        <td>
+          <select id= "form-name">
+            <option value="">--選択してください--</option>
+            <% Product.all.each do |f| %>
+              <option value=<%= f.id %>><%= f.name %></option>
+            <% end %>
+          </select>
+        </td>
+      </tr>
 
-<div class="field">
-  <%= form.label :単価 %>
-  <%= form.text_field :price %>
-</div>
+      <%= form.hidden_field :name %>
+      
+    </div>
 
-<div class="field">
-  <%= form.label :セット数 %>
-  <%= form.text_field :set %>
-</div>
+    <div class="field">
+      <tr>
+        <td><%= form.label :商品コード %></td>
+        <td><%= form.text_field :code %></td>
+      </tr>
+    </div>
 
-<div class="field">
-  <%= form.label :説明 %>
-  <%= form.text_field :content %>
-</div>
+    <div class="field">
+      <tr>
+        <td><%= form.label :単価 %></td>
+        <td><%= form.text_field :price %></td>
+      </tr>
+    </div>
 
-<div class="field">
-  <%= form.hidden_field :product_id %>
-</div>
+    <div class="field">
+      <tr>
+        <td><%= form.label :セット数 %></td>
+        <td><%= form.text_field :set %></td>
+      </tr>
+    </div>
 
-<div class="field">
-  <%= form.hidden_field :stock_id %>
-</div>
+    <div class="field">
+      <tr>
+        <td><%= form.label :説明 %></td>
+        <td><%= form.text_field :content %></td>
+      </tr>
+    </div>
+
+    <%= form.hidden_field :product_id %>
+    <%= form.hidden_field :stock_id %>
+
+  </tbody>
+</table>
 
 <script>
   document.getElementById("form-name").addEventListener('change', function() {

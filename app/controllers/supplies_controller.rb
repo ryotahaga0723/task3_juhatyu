@@ -22,6 +22,7 @@ class SuppliesController < ApplicationController
 
   def ajax
     @product = Product.find(params[:product_id])
+    @supply = Supply.left_outer_joins(:product).where(products: {category_id: @product.category_id}).count
     respond_to do |format|
       format.js{render :ajax}
     end

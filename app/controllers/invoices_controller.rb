@@ -91,6 +91,7 @@ class InvoicesController < ApplicationController
 
       redirect_to invoice_url(@invoice), notice: "請求書を更新しました"
     else
+      @order = Order.find(@invoice.order_id)
       render :edit, status: :unprocessable_entity
     end
   end

@@ -53,100 +53,120 @@
           </tbody>
         </table>
       </div>
-    
-    <% Order.order(created_at: :desc).limit(1).each do |f| %>
-      <% if f.code.present? %>
-        <% @order_code = f.code.to_i + 1 %>
-      <% else %>
-        <% @order_code = "1000001" %>
-      <% end %>
-    <% end %>
-    
-    
-      <div class="field">
-        <%= form.hidden_field :code, value: @order_code %>
-      </div>
+        
+      <%= form.hidden_field :code %>
     
       <%= form.fields_for :status do |form| %>
         <%= form.hidden_field :status %>
       <% end %>
+
+      <table>
+        <tbody>
     
-      <div class="field">
-        <%= form.label :到着希望日 %>
-        <%= form.date_select :date %>
-      </div>
+          <div class="field">
+            <tr>
+              <td><%= form.label :到着希望日 %></td>
+              <td><%= form.date_select :date %></td>
+            </tr>
+          </div>
+      
+          <div id="name_forms">
+            <%= form.fields_for :shipping do |form| %>
+
+              <div class="field">
+                <tr>
+                  <td><%= form.label :名前 %></td>
+                  <td><%= form.text_field :name %></td>
+                </tr>
+
+              </div>
+            <% end %>
+          </div>
     
-      <div id="name_forms">
-      <%= form.fields_for :shipping do |form| %>
-        <div class="field">
-          <%= form.label :名前 %>
-          <%= form.text_field :name, value: current_user.name %>
-        </div>
-      <% end %>
-    </div>
+          <div id="address_forms">
+            <%= form.fields_for :address do |form| %>
+  
+              <div class="field">
+                <tr>
+                  <td><%= form.label :郵便番号 %></td>
+                  <td><%= form.number_field :postcode %></td>
+                </tr>
+              </div>
     
-      <div id="address_forms">
-      <%= form.fields_for :address do |form| %>
-        <div class="field">
-          <%= form.label :郵便番号 %>
-          <%= form.number_field :postcode, value: current_user.company.address.postcode %>
-        </div>
+              <div class="field">
+                <tr>
+                  <td><%= form.label :都道府県名 %></td>
+                  <td><%= form.text_field :prefecture %></td>
+                </tr>  
+              </div>
     
-        <div class="field">
-          <%= form.label :都道府県名 %>
-          <%= form.text_field :prefecture, value: current_user.company.address.prefecture %>      
-        </div>
+              <div class="field">
+                <tr>
+                  <td><%= form.label :市町村名 %></td>
+                  <td><%= form.text_field :city %></td>
+                </tr>
+              </div>
     
-        <div class="field">
-          <%= form.label :市町村名 %>
-          <%= form.text_field :city, value: current_user.company.address.city %>
-        </div>
+              <div class="field">
+                <tr>
+                  <td><%= form.label :地区名 %></td>
+                  <td><%= form.text_field :town %></td>
+                </tr>
+              </div>
     
-        <div class="field">
-          <%= form.label :地区名 %>
-          <%= form.text_field :town, value: current_user.company.address.town %>
-        </div>
+              <div class="field">
+                <tr>
+                  <td><%= form.label :以降住所 %></td>
+                  <td><%= form.text_field :address %></td>
+                </tr>
+              </div>
     
-        <div class="field">
-          <%= form.label :以降住所 %>
-          <%= form.text_field :address, value: current_user.company.address.address %>
-        </div>
+              <div class="field">
+                <tr>
+                  <td><%= form.label :建物名 %></td>
+                  <td><%= form.text_field :building %></td>
+                </tr>
+              </div>
+     
+              <div class="field">
+                <tr>
+                  <td><%= form.label :部屋番号 %></td>
+                  <td><%= form.text_field :room_number %></td>
+                </tr>
+              </div>
+  
+            <% end %>
+          </div>
+     
+          <div id="telephone_forms">
+            <%= form.fields_for :telephone do |form| %>
+  
+              <div class="field">
+                <tr>
+                  <td><%= form.label :電話番号 %></td>
+                  <td><%= form.number_field :number %></td>
+                </tr>
+              </div>
+
+            <% end %>
+          </div>
+      
+        </tbody>
+      </table>
     
-        <div class="field">
-          <%= form.label :建物名 %>
-          <%= form.text_field :building, value: current_user.company.address.building %>
-        </div>
-    
-        <div class="field">
-          <%= form.label :部屋番号 %>
-          <%= form.text_field :room_number, value: current_user.company.address.room_number %>
-        </div>
-      <% end %>
-    </div>
-    
-    <div id="telephone_forms">
-      <%= form.fields_for :telephone do |form| %>
-        <div class="field">
-          <%= form.label :電話番号 %>
-          <%= form.number_field :number, value: current_user.company.telephone.number %>
-        </div>
-      <% end %>
-    </div>
-    
-    
-      <div class="field">
-        <%= form.hidden_field :user_id, value: current_user.id %>
-      </div>
+      <%= form.hidden_field :user_id %>
     
       <div class="actions">
         <%= form.submit %>
       </div>
+
     <% end %>
     
-      <div id="mask" class="hidden"></div>
-      <div id="modal" class="hidden">
-        <p>モーダルウィンドウ</p>
-      </div>
+    <div id="mask" class="hidden"></div>
+    <div id="modal" class="hidden">
+      <p>モーダルウィンドウ</p>
+    </div>
+
     <% if current_user.company.code == 100 %>
       <%= link_to '戻る', index_receive_orders_path %>
     <% else %>

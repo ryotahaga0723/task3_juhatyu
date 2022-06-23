@@ -6,12 +6,69 @@ ja:
         password: "パスワード"
         password_confirmation: "パスワード（確認）"
         email: "メールアドレス"
-    errors:
-      messages:
-        record_invalid: 'バリデーションに失敗しました: %{errors}'
-        restrict_dependent_destroy:
-          has_one: "%{record}が存在しているので削除できません"
-          has_many: "%{record}が存在しているので削除できません"
+        company: "企業コード"
+      invoice:
+        code: "請求書番号"
+        invoice_contents: "商品"
+      invoice/invoice_contents:
+        name: "商品名"
+        set: "セット数"
+        price: "単価"
+        quantity: "個数"
+        code: "商品コード"
+      order:
+        address: "住所"
+        telephone: "電話番号"
+        shipping: "お届け先"
+        order_supplies: "個数"
+      order/order_supplies:
+        quantity: "個数"
+      order/address:
+        postcode: "郵便番号"
+        prefecture: "都道府県名"
+        city: "市町村名"
+        town: "地区名"
+        address: "以降住所"
+      order/telephone:
+        number: "電話番号"
+      order/shipping:
+        name: "お届け先の名前"
+      category:
+        name: "カテゴリー名"
+      product:
+        stock: "在庫数"
+        name: "商品名"
+      product/stock:
+        quantity: "在庫数"
+      supply:
+        product: "商品"
+        stock: "在庫"
+        code: "商品コード"
+        name: "商品名"
+        price: "単価"
+        set: "セット数"
+      company:
+        name: "社名"
+        code: "企業コード"
+      company/address:
+        postcode: "郵便番号"
+        city: "市町村名"
+        town: "地区名"
+        address: "以降住所"
+      company/telephone:
+        number: "電話番号"
+      payee:
+        bank: "銀行名"
+        branch: "支店名"
+        kind: "口座種類"
+        number: "口座番号"
+      schedule:
+        what: "何を"
+        do: "どうする"
+      delivery:
+        arrive_date: "到着予定日"
+        delivery_company: "配達業者"
+        delivery_number: "配達番号"
   date:
     abbr_day_names:
     - 日
@@ -114,6 +171,11 @@ ja:
   errors:
     format: "%{attribute}%{message}"
     messages:
+      already_confirmed: "was already confirmed, please try signing in"
+      confirmation_period_expired: "needs to be confirmed within %{period}, please request a new one"
+      expired: "has expired, please request a new one"
+      not_found: "not found"
+      not_locked: "was not locked"
       accepted: を受諾してください
       blank: を入力してください
       confirmation: と%{attribute}の入力が一致しません
@@ -139,10 +201,14 @@ ja:
       too_short: は%{count}文字以上で入力してください
       wrong_length: は%{count}文字で入力してください
       not_saved:
-        #one: "1 error prohibited this %{resource} from being saved:"
         one: "１つのエラーがあります。修正して再度送信して下さい。:"
-        #other: "%{count} errors prohibited this %{resource} from being saved:"
         other: "%{count}のエラーがあります。修正して再度送信して下さい。"
+        taken: "は既に使用されています。"
+        blank: "が入力されていません。"
+        too_short: "は%{count}文字以上に設定して下さい。"
+        too_long: "は%{count}文字以下に設定して下さい。"
+        invalid: "は有効でありません。"
+        confirmation: "が内容とあっていません。"
     template:
       body: 次の項目を確認してください
       header:
