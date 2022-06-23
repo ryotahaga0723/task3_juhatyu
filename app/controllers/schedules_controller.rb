@@ -53,6 +53,7 @@ class SchedulesController < ApplicationController
         format.html { redirect_to schedules_url(@schedule.order_id), notice: "スケジュールを更新しました" }
         format.json { render :show, status: :ok, location: @schedule }
       else
+        @order = Order.find(@schedule.order_id)
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @schedule.errors, status: :unprocessable_entity }
       end

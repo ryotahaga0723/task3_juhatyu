@@ -74,6 +74,7 @@ class OrdersController < ApplicationController
   # GET /orders/1/edit
   def edit
     @order = Order.find(params[:id])
+    @supply = Supply.all
   end
 
   def confirm
@@ -139,6 +140,7 @@ class OrdersController < ApplicationController
         format.html { redirect_to order_url(@order), notice: "注文内容を更新しました" }
         format.json { render :show, status: :ok, location: @order }
       else
+        @supply = Supply.all
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end

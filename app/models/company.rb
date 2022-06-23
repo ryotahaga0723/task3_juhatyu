@@ -1,5 +1,7 @@
 class Company < ApplicationRecord
   validates :name, presence: true, length: { maximum: 255 }
+  validates :code, presence: true, uniqueness: true
+
 
   self.primary_key = :code
   has_many :users, dependent: :destroy

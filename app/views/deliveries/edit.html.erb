@@ -1,9 +1,12 @@
 <section class="section">
   <div class ="section_inner">
 
-    <h1>配達情報新規登録</h1>
+    <h1>配達情報編集</h1>
 
     <%= render 'form', delivery: @delivery, order: @order %>
+
+    <%= link_to '戻る', delivery_path(@delivery) %>
+
 
   </div>
 </section>

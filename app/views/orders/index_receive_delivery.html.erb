@@ -38,7 +38,7 @@
               <%= order.address.building %>
               <%= order.address.room_number %>
             </td>
-            <td><%= order.order_supplies.count %>点</td>
+            <td><%= order.order_supplies.where.not(quantity: 0).count %>点</td>
             <td><%= order.date.strftime("%Y年%m月%d日") %></td>
             <td><%= link_to '詳細', order %></td>
             <td><%= link_to '編集', edit_order_path(order) %></td>

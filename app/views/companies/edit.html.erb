@@ -2,8 +2,88 @@
   <div class ="section_inner">
     <h1>取引先編集</h1>
 
-    <%= render 'form', company: @company %>
-
+    <%= form_with(model: @company, local: true) do |form| %>
+      <% if @company.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@company.errors.count, "error") %> prohibited this company from being saved:</h2>
+    
+          <ul>
+            <% @company.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    
+      <div class="field">
+        <%= form.label :企業コード %>
+        <%= form.text_field :code, readonly: true %>
+      </div>
+    
+      <div class="field">
+        <%= form.label :社名 %>
+        <%= form.text_field :name %>
+      </div>
+    
+      <div id="address_forms">
+        <%= form.fields_for :address do |form| %>
+          <div class="field">
+            <%= form.label :郵便番号 %>
+            <%= form.number_field :postcode %>
+          </div>
+    
+          <div class="field">
+            <%= form.label :都道府県名 %>
+            <%= form.collection_select :prefecture, JpPrefecture::Prefecture.all, :name, :name %>      </div>
+    
+          <div class="field">
+            <%= form.label :市町村名 %>
+            <%= form.text_field :city %>
+          </div>
+    
+          <div class="field">
+            <%= form.label :地区名 %>
+            <%= form.text_field :town %>
+          </div>
+    
+          <div class="field">
+            <%= form.label :以降住所 %>
+            <%= form.text_field :address %>
+          </div>
+    
+          <div class="field">
+            <%= form.label :建物名 %>
+            <%= form.text_field :building %>
+          </div>
+    
+          <div class="field">
+            <%= form.label :部屋番号 %>
+            <%= form.text_field :room_number %>
+          </div>
+        <% end %>
+      </div>
+    
+      <div id="telephone_forms">
+        <%= form.fields_for :telephone do |form| %>
+          <div class="field">
+            <%= form.label :電話番号 %>
+            <%= form.number_field :number %>
+          </div>
+        <% end %>
+      </div>
+    
+      <% if current_user.admin == true %>
+        <div class="field">
+          <%= form.label :角印 %>
+          <%= form.file_field :image %>
+        </div>
+      ※お得意先登録の場合入力不要
+      <% end %>
+    
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+    <% end %>
     <%= link_to '戻る', companies_path %>
   
   </div>

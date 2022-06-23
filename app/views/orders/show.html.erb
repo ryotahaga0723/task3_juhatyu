@@ -57,7 +57,7 @@
         </tr>
       </thead>
       <tboby>
-        <% @order.order_supplies.all.each do |f| %>
+        <% @order.order_supplies.where.not(quantity: 0).each do |f| %>
           <tr>
             <td><%= f.supply.code %></td>
             <td><%= f.supply.name %></td>
