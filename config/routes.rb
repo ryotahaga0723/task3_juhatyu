@@ -7,10 +7,15 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :new, :create, :show, :edit, :update]
   resources :companies
   resources :products
-  resources :invoices
   resources :categories
   resources :deliveries
   resources :payees
+
+  resources :invoices do
+    collection do
+      get :index_receive
+    end
+  end
 
   resources :orders do
     collection do

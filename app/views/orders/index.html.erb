@@ -19,7 +19,11 @@
         <tr>
           <td>￥<%= @orders_receive.sum(:total_price).floor %></td>
           <td><%= @orders_receive.count %>回</td>
-          <td>￥<%= (@orders_receive.sum(:total_price) / @orders_receive.count).floor %></td>
+          <% if @orders_receive.count != 0 %>
+            <td>￥<%= (@orders_receive.sum(:total_price) / @orders_receive.count).floor %></td>
+          <% else %>
+            <td>￥0</td>
+          <% end %>
         </tr>
       </tbody>
     </table>

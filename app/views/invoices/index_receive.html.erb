@@ -1,0 +1,31 @@
+<section class="section">
+  <div class ="section_inner">
+
+    <h1>請求書一覧</h1>
+
+    <p id="notice"><%= notice %></p>
+
+    <table class="osare3-table col4t">
+      <thead>
+        <tr>
+          <th>請求書番号</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @invoices.each do |invoice| %>
+          <tr>
+            <td><%= invoice.code %></td>
+            <td><%= link_to '詳細', invoice %></td>
+            <% if current_user.company.code == 100 && current_user.admin == true %>
+              <td><%= link_to '編集', edit_invoice_path(invoice, format: invoice.order) %></td>
+              <td><%= link_to '削除', invoice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</section>

@@ -22,10 +22,6 @@
 
                 <% if current_user.company.code == 100 %>
                   <div class = "nav_item">
-                    <li><%= link_to "販売商品一覧", supplies_path(current_user.company.code) %></li>
-                  </div>
-
-                  <div class = "nav_item">
                     <li><%= link_to "受注一覧", index_receive_orders_path(current_user.company.code) %></li>
                   </div>
 
@@ -34,9 +30,16 @@
                   </div>
 
                   <div class = "nav_item">
+                    <li><%= link_to "販売商品一覧", supplies_path(current_user.company.code) %></li>
+                  </div>
+
+                  <div class = "nav_item">
                     <li><%= link_to "取引先一覧", companies_path(current_user.id) %></li>
                   </div>
-  
+
+                  <div class = "nav_item">
+                    <li><%= link_to "請求書一覧", index_receive_invoices_path(current_user.company.code) %></li>
+                  </div>
 
                 <% else %>
                   <div class = "nav_item">
@@ -46,11 +49,12 @@
                   <div class = "nav_item">
                     <li><%= link_to "会社詳細", company_path(current_user.company.code) %></li>
                   </div>
-                <% end %>
 
-                <div class = "nav_item">
-                  <li><%= link_to "請求書一覧", invoices_path(current_user.company.code) %></li>
-                </div>
+                  <div class = "nav_item">
+                    <li><%= link_to "請求書一覧", invoices_path(current_user.company.code) %></li>
+                  </div>
+
+                <% end %>
 
                 <div class = "nav_item">
                   <li><%= link_to "ログアウト", session_path(current_user.id), method: :delete %></li>
@@ -85,10 +89,6 @@
 
             <% if current_user.company.code == 100 %>
               <div class = "footer_nav_item">
-                <li><%= link_to "販売商品一覧", supplies_path(current_user.company.code) %></li>
-              </div>
-
-              <div class = "footer_nav_item">
                 <li><%= link_to "受注一覧", index_receive_orders_path(current_user.company.code) %></li>
               </div>
 
@@ -97,7 +97,15 @@
               </div>
 
               <div class = "footer_nav_item">
+                <li><%= link_to "販売商品一覧", supplies_path(current_user.company.code) %></li>
+              </div>
+
+              <div class = "footer_nav_item">
                 <li><%= link_to "取引先一覧", companies_path(current_user.id) %></li>
+              </div>
+
+              <div class = "footer_nav_item">
+                <li><%= link_to "請求書一覧", index_receive_invoices_path(current_user.company.code) %></li>
               </div>
 
             <% else %>
@@ -108,12 +116,12 @@
               <div class = "footer_nav_item">
                 <li><%= link_to "会社詳細", company_path(current_user.company.code) %></li>
               </div>
+
+              <div class = "footer_nav_item">
+                <li><%= link_to "請求書一覧", invoices_path(current_user.company.code) %></li>
+              </div>
+
             <% end %>
-
-            <div class = "footer_nav_item">
-              <li><%= link_to "請求書一覧", invoices_path(current_user.company.code) %></li>
-            </div>
-
           <% end %>
         </ul>
 

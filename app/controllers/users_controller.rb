@@ -15,7 +15,13 @@ class UsersController < ApplicationController
       @user = User.new(user_params)
       if @user.save
         log_in(@user)
-        redirect_to companies_path(@user.id)
+        
+        if @user.company.code == 100
+          redirect_to index_receive_orders_path(@user.id)
+        else
+          redirect_to orders_path(@user.id)
+        end
+
       else
         render :new
       end

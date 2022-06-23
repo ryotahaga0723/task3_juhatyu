@@ -18,8 +18,50 @@
       <% end %>
   
       <div id="form-supply">
-        <%= render 'ajax', { form: form } %>
-      </div>
+      <table>
+      <tbody>
+    
+        <div class="field">
+          <tr>
+            <td><%= form.label :商品名 %></td>
+            <td><%= form.text_field :name, readonly: true %></td>
+          </tr>          
+        </div>
+    
+        <div class="field">
+          <tr>
+            <td><%= form.label :商品コード %></td>
+            <td><%= form.text_field :code %></td>
+          </tr>
+        </div>
+    
+        <div class="field">
+          <tr>
+            <td><%= form.label :単価 %></td>
+            <td><%= form.text_field :price %></td>
+          </tr>
+        </div>
+    
+        <div class="field">
+          <tr>
+            <td><%= form.label :セット数 %></td>
+            <td><%= form.text_field :set %></td>
+          </tr>
+        </div>
+    
+        <div class="field">
+          <tr>
+            <td><%= form.label :説明 %></td>
+            <td><%= form.text_field :content %></td>
+          </tr>
+        </div>
+    
+        <%= form.hidden_field :product_id %>
+        <%= form.hidden_field :stock_id %>
+    
+      </tbody>
+    </table>
+          </div>
   
       <div class="actions">
         <%= form.submit %>

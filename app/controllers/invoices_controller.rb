@@ -3,8 +3,13 @@ class InvoicesController < ApplicationController
 
   # GET /invoices or /invoices.json
   def index
-    @invoices = Invoice.all
+    @invoices = Invoice.left_outer_joins(order: [{user: :company}, :status]).where(companies: {code: current_user.company.code}).where(statuses: {status: 5}).order(code: "DESC")
   end
+
+  def index_receive
+    @invoices = Invoice.all.order(code: "DESC")
+  end
+
 
   # GET /invoices/1 or /invoices/1.json
   def show
