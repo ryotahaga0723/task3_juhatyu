@@ -82,9 +82,11 @@
     </div>
 
     <% if current_user.company.code == 100 %>
-    <%= link_to '編集', edit_invoice_path(format: @invoice) %> |
+      <%= link_to '編集', edit_invoice_path(format: @invoice) %> |
+      <%= link_to '戻る', index_receive_invoices_path %>
+    <% else %>
+      <%= link_to '戻る', invoices_path %>
     <% end %>
-    <%= link_to '戻る', invoices_path %>
 
 
   </div>

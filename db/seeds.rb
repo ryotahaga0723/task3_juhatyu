@@ -82,6 +82,13 @@ Category.create!(
   name: 'フルーツ',
   company_id: 100,
 )
+
+Category.create!(
+  name: '野菜',
+  company_id: 100,
+)
+
+
 Product.create!(
   name: 'リンゴ', 
   company_id: 100,
@@ -93,7 +100,7 @@ Product.create!(
   }
 )
 Supply.create!(
-  code: '100119',
+  code: '10010019',
   name: "リンゴ",
   price: 100,
   set: 1,
@@ -116,7 +123,7 @@ Product.create!(
   }
 )
 Supply.create!(
-  code: '100129',
+  code: '10010029',
   name: "ブドウ",
   price: 150,
   set: 1,
@@ -130,7 +137,7 @@ Cancel.create!(
 )
 
 Supply.create!(
-  code: '100139',
+  code: '10010039',
   name: "リンゴ",
   price: 300,
   set: 2,
@@ -142,39 +149,83 @@ Cancel.create!(
   supply_id: 3
 )
 
+Product.create!(
+  name: 'レタス', 
+  company_id: 100,
+  category_id: 2,
+  stock_attributes: {
+    quantity: 100,
+    company_id: 100,
+    user_id: 1,
+  }
+)
+Supply.create!(
+  code: '10020019',
+  name: "レタス",
+  price: 150,
+  set: 1,
+  content: "",
+  product_id: 3,
+  stock_id: 3,
+)
+Cancel.create!(
+  supply_id: 4
+)
+
+
 
 Order.create!(
   code: '1000001',
   date: "2022-06-13",
-  total_price: 100,
+  total_price: 200,
   user_id: 2,
   order_supplies_attributes: [{
     availability: true,
     quantity: 20,
     supply_id: 1,
+  },{
+    availability: true,
+    quantity: 0,
+    supply_id: 2,
+  },{
+    availability: true,
+    quantity: 0,
+    supply_id: 3,
+  },{
+    availability: true,
+    quantity: 0,
+    supply_id: 4,
   }],
   status_attributes: {
     status: 0
   },
   shipping_attributes: {
-    name: '管理者A',
+    name: '社員C',
   }
 )
 Order.create!(
   code: '1000002',
   date: "2022-06-14",
-  total_price: 2000,
+  total_price: 6500,
   user_id: 2,
   order_supplies_attributes: [
     {
       availability: true,
       quantity: 20,
-      supply_id: 2,
+      supply_id: 1,
     },{
       availability: true,
       quantity: 30,
-      supply_id: 1,
-    }],
+      supply_id: 2,
+    },{
+      availability: true,
+      quantity: 0,
+      supply_id: 3,
+    },{
+      availability: true,
+      quantity: 0,
+      supply_id: 4,
+  }],
   status_attributes: {
     status: 0
   },
@@ -185,13 +236,25 @@ Order.create!(
 Order.create!(
   code: '1000003',
   date: "2022-06-15",
-  total_price: 2000,
+  total_price: 4500,
   user_id: 2,
   order_supplies_attributes: [
     {
       availability: true,
       quantity: 15,
       supply_id: 3,
+    },{
+      availability: true,
+      quantity: 0,
+      supply_id: 1,
+    },{
+      availability: true,
+      quantity: 0,
+      supply_id: 2,
+    },{
+      availability: true,
+      quantity: 0,
+      supply_id: 4,
     }],
   status_attributes: {
     status: 0

@@ -77,6 +77,7 @@ class InvoicesController < ApplicationController
 
     else
       @order = Order.find(@invoice.order_id)
+      @order_supplies = OrderSupply.where(order_id: @order.id)
       render :new, status: :unprocessable_entity
     end
   end
@@ -97,6 +98,7 @@ class InvoicesController < ApplicationController
       redirect_to invoice_url(@invoice), notice: "請求書を更新しました"
     else
       @order = Order.find(@invoice.order_id)
+      @order_supplies = OrderSupply.where(order_id: @order.id)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -106,7 +108,7 @@ class InvoicesController < ApplicationController
     @invoice.destroy
 
     respond_to do |format|
-      format.html { redirect_to invoices_url, notice: "請求書を削除しました" }
+      format.html { redirect_to index_receive_invoices_url, notice: "請求書を削除しました" }
       format.json { head :no_content }
     end
   end

@@ -53,15 +53,7 @@
         <hr color="#f5b771">
     
       <% end %>
-    
-      <div id="content_forms">
-        <%= form.fields_for :invoice_contents do |content| %>  
-          <%= render 'content', {content: content, order: @order} %>
-        <% end %>
-      </div>
-
-      <%= link_to_add_association '+商品入力フォームの追加', form, :invoice_contents, partial: "content", data: {association_insertion_node: '#content_forms', association_insertion_method: 'after'}, form_name: 'content' %>
-    
+        
       <%= form.fields_for :address do |form| %>
         <%= form.hidden_field :postcode %>
         <%= form.hidden_field :prefecture %>
@@ -85,7 +77,7 @@
 
     <% end %>
 
-    <%= link_to '戻る', invoices_path %>
+    <%= link_to '戻る', index_receive_invoices_path %>
 
   </div>
 </section>
