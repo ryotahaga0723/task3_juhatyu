@@ -1,26 +1,31 @@
 <section class="section">
   <div class ="section_inner">
 
-    <h1><%= @supply.name %> 発注一覧</h1>
+    <h1><%= @supply.name %> 発注一覧 <%= @month.strftime("%m月") %></h1>
 
     <p id="notice"><%= notice %></p>
 
     <table class="osare3-table col4t">
       <thead>
         <tr>
-          <th>購入数1位</th>
-          <th>購入数2位</th>
-          <th>購入数3位</th>
-          <th colspan="3"></th>
+        <th><%= @month.strftime("%m月") %>購入金額合計</th>
+        <th><%= @month.strftime("%m月") %>発注回数</th>
+        <th><%= @month.strftime("%m月") %>平均購入金額</th>
+        <th colspan="3"></th>
         </tr>
       </thead>
 
       <tbody>
         <tr>
-          <td></td>
-        </tr>
+          <td>￥<%= @order_supplies_sum.floor %></td>
+          <td><%= @order_supplies.count %>回</td>
+          <td>￥<%= (@order_supplies_sum / @order_supplies.count).floor %></td>
+      </tr>
       </tbody>
     </table>
+
+    <%= link_to "前月", index_supply_orders_path(month: @month.prev_month, supply: @supply) %>
+    <%= link_to "翌月", index_supply_orders_path(month: @month.next_month, supply: @supply) %>
 
     <table class="osare3-table col4t">
       <thead>

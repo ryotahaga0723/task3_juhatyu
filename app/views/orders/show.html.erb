@@ -65,7 +65,7 @@
             <td><%= f.supply.set %></td>
             <td><%= f.quantity %></td>
             <% if current_user.company.code != 100 %>
-              <td><%= link_to "商品ごとの発注一覧", index_supply_orders_path(f.supply)%></td>
+              <td><%= link_to "商品ごとの発注一覧", index_supply_orders_path(supply: f.supply)%></td>
             <% end %>
 
           </tr>
