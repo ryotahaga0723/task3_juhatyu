@@ -46,6 +46,15 @@ User.create!(
   admin: false, 
   company_id: 200,
 )
+User.create!(
+  name: '社員D',
+  email: 'ddd@gmail.com',
+  password: 'dddddd',
+  password_confirmation: 'dddddd',
+  admin: false, 
+  company_id: 100,
+)
+
 
 Address.create!(
   postcode: 1000001,
