@@ -29,8 +29,26 @@
           </thead>
     
           <tbody>
-            <%= render partial:"orders/detail", locals: {supply: @supply} %>
-          </tbody>
+            <% @supply.map do |s| %>
+              <tr>
+              <td><%= s.code %></td>
+              <td id=<%= s.id %>>
+                <div class="supply-detail">
+                  <%= s.name %>
+                </div>
+              </td>
+              <td><%= s.price %></td>
+              <td><%= s.set %></td>
+        
+              <% if s.order_supplies.left_outer_joins(order: {user: :company}).where(companies: {code: current_user.company.code}).present? %>
+                <td><%= s.order_supplies.left_outer_joins(order: {user: :company}).where(companies: {code: current_user.company.code}).average(:quantity).round(1) %></td>
+              <% else %>
+                <td>0</td>
+              <% end %>
+            
+            </tr>
+          <% end %>
+                  </tbody>
         </table>
     
         <table class="osare3-table col4t">
@@ -175,3 +193,19 @@
 
   </div>
 </section>
+
+<script>
+<% @supply.map do |s| %>
+document.getElementById("<%= s.id %>").addEventListener('click', function() {
+  var supply = document.getElementById("<%= s.id %>").id;
+
+  $.ajax({
+    url: "/orders/ajax",
+    type: "GET",
+    data: {
+      supply: supply
+    }
+  })
+})
+<% end %>
+</script>

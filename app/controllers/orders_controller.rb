@@ -81,7 +81,7 @@ class OrdersController < ApplicationController
   # GET /orders/1/edit
   def edit
     @order = Order.find(params[:id])
-    @supply = Supply.all
+    @supply = Supply.left_outer_joins(order_supplies: :order).where(orders: {id: @order.id})
   end
 
   def confirm
