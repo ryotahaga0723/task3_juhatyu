@@ -83,9 +83,11 @@
                 <td><%= link_to '請求書作成',  new_invoice_path(order) %></td>
               <% elsif order.status.status == "請求書承認待ち" %>
                 <td><%= order.status.status %></td>
-                  <% if current_user.admin == true %>
-                    <td><%= link_to '請求書承認',  update_invoice_approval_path(order.invoice.approval), method: :post %></td>
-                  <% end %>
+                <td><%= link_to '請求書詳細',  invoice_path(order.invoice) %></td>
+
+                <% if current_user.admin == true %>
+                  <td><%= link_to '請求書承認',  update_invoice_approval_path(order.invoice.approval), method: :post %></td>
+                <% end %>
           
               <% elsif order.status.status == "請求書送付済み" %>
                 <td><%= order.status.status %></td>
