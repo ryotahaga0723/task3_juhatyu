@@ -71,6 +71,7 @@ class OrdersController < ApplicationController
     @order.build_telephone
     @order.build_shipping
     @order.build_status
+    @user = current_user
     @supply = Supply.left_outer_joins(:cancel).where(cancels: {cancel: false})
     @supply.each do |supply|
       @order.order_supplies.build(supply_id: supply.id)
