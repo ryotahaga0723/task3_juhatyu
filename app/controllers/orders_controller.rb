@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
     @month = params[:month] ? Date.parse(params[:month]) : Time.zone.today
     @supply = Supply.find(params[:supply])
     @product = @supply.product
-    @order_supplies = OrderSupply.left_outer_joins(supply: :product).where(products: {name: @product.name}).where(products: {company_id: current_user.company.id}).where(created_at: @month.all_month)
+    @order_supplies = OrderSupply.left_outer_joins(supply: :product).where(products: {name: @product.name}).where(products: {company_id: @product.company.id}).where(created_at: @month.all_month)
     @order_supplies_sum =0
     @order_supplies.each do |os|
       @order_supplies_sum += (os.quantity * @supply.price)
