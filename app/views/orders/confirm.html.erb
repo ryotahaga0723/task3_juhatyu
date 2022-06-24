@@ -20,9 +20,7 @@
           <tr>
             <td>
               <% unless o.quantity.nil? %>
-                <% if (o.supply.avarage / 10) > o.quantity || (o.supply.avarage * 10) < o.quantity %>
-                  桁違いの可能性あり
-                <% elsif o.quantity.to_s.split("").uniq.size == 1 && o.quantity > 100 %>
+                <% if o.quantity.to_s.split("").uniq.size == 1 && o.quantity > 100 %>
                   連打の可能性あり
                 <% end %>
               <% end %>
