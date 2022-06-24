@@ -19,7 +19,11 @@
         <tr>
           <td>￥<%= @order_supplies_sum.floor %></td>
           <td><%= @order_supplies.count %>回</td>
+          <% if @order_supplies.count != 0 %>
           <td>￥<%= (@order_supplies_sum / @order_supplies.count).floor %></td>
+          <% else %>
+          <td>0</td>
+          <% end %>
       </tr>
       </tbody>
     </table>
