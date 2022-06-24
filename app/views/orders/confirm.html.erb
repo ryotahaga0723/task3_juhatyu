@@ -19,9 +19,15 @@
         <% @order.order_supplies.each do |o| %>
           <tr>
             <td>
+              <% @supply_avarage = 0 %>
               <% unless o.quantity.nil? %>
-                <% if o.quantity.to_s.split("").uniq.size == 1 && o.quantity > 100 %>
-                  連打の可能性あり
+                <% if o.supply.order_supplies.left_outer_joins(order: {user: :company}).where(companies: {code: current_user.company.code}).present? %>
+                  <% @supply_avarage = o.supply.order_supplies.left_outer_joins(order: {user: :company}).where(companies: {code: current_user.company.code}).average(:quantity).round(1) %>
+                  <% if (@supply_avarage / 10) > o.quantity || (@supply_avarage * 10) < o.quantity %>
+                    桁違いの可能性あり
+                  <% elsif o.quantity.to_s.split("").uniq.size == 1 && o.quantity > 100 %>
+                    連打の可能性あり
+                  <% end %>
                 <% end %>
               <% end %>
             </td>
