@@ -9,8 +9,8 @@
       <td><%= s.price %></td>
       <td><%= s.set %></td>
 
-      <% if s.order_supplies.left_outer_joins(order: {user: :company}).where(companies: {code: current_user.company.code}).present? %>
-        <td><% s.order_supplies.left_outer_joins(order: {user: :company}).where(companies: {code: current_user.company.code}).average(:quantity).round(1) %></td>
+      <% if s.order_supplies.present? %>
+        <td><%= s.order_supplies.left_outer_joins(order: {user: :company}).where(companies: {code: current_user.company.code}).average(:quantity).round(1) %></td>
       <% else %>
         <td>0</td>
       <% end %>
