@@ -147,7 +147,7 @@ class OrdersController < ApplicationController
         format.html { redirect_to order_url(@order), notice: "注文内容を更新しました" }
         format.json { render :show, status: :ok, location: @order }
       else
-        @supply = Supply.left_outer_joins(:cancel).where(cancels: {cancel: false})
+        @supply = Supply.left_outer_joins(order_supplies: :order).where(orders: {id: @order.id})
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
